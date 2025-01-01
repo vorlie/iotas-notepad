@@ -12,21 +12,9 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
 ## Installation
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/iotas-notepad.git
-    cd iotas-notepad
-    ```
-
-2. Install dependencies:
-    ```sh
-    npm install
-    ```
-
-3. Start the application:
-    ```sh
-    npm start
-    ```
+1. Download the latest release from the [releases page](https://github.com/vorlie/iotas-notepad/releases).
+2. Extract the downloaded archive.
+3. Run the executable file to start the application.
 
 ## Usage
 
@@ -37,10 +25,24 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
 ## Development
 
-To run the app in development mode with live reloading:
-```sh
-npm run electron
-```
+To set up the development environment:
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/vorlie/iotas-notepad.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd iotas-notepad
+    ```
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
+4. Run the app in development mode with live reloading:
+    ```sh
+    npm run electron
+    ```
 
 ## Packaging
 
