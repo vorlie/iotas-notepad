@@ -1,8 +1,9 @@
 {
   "name": "iotas-notepad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
+    "electron": "electron .",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"

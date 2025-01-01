@@ -48,7 +48,7 @@ function deleteNote(index) {
 function selectNote(element, index) {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const textarea = document.querySelector(".editor textarea");
-    const status = document.querySelector(".editor .status");
+    const status = document.querySelector(".sidebar .status");
 
     // Highlight selected note
     document.querySelectorAll(".note-list li").forEach(note => note.classList.remove("selected"));
