@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "vorlie",
-  "license": "ISC",
+  "license": "MIT",
   "description": "simple notepad",
   "devDependencies": {
     "@electron-forge/cli": "^7.6.0",
