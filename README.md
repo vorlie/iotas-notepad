@@ -17,6 +17,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
     - For the portable version, download `iotas-notepad-<version>-win32-x64-Portable.zip`, extract the archive, and run the executable file.
     - For the setup version, download `iotas-notepad-<version>-win32-x64-Setup.exe` and run the setup file to install the application.
 3. Follow the on-screen instructions to complete the installation.
+4. If you used the setup version, the app will be installed under `C:\Users\USER\AppData\Local\iotas-notepad`.
 
 ## Usage
 
