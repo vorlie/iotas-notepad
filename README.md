@@ -51,7 +51,7 @@ npm run package
 
 ## License
 
-This project is licensed under the MIT [LICENSE].
+This project is licensed under the MIT [LICENSE](LICENSE).
 
 ## Contributing
 
