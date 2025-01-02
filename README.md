@@ -23,7 +23,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 - Click on a note in the sidebar to edit it.
 - Click the "Export" or "Import" to export/import notes.
 - Type in the search bar to search notes.
-- Use the buttons next to each note to edit the title or delete the note.
+- Use the buttons next to each note to edit the title, delete the note or save the note.
 - Notes are saved automatically after 10 seconds of inactivity or when you press `Ctrl+S` (or `Cmd+S` on macOS).
 
 ## Development
