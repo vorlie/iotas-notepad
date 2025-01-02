@@ -27,6 +27,7 @@
     --main-content-flex: 1;
 
     --sidebar-width: 30%;
+    --sidebar-max-width: 300px;
     --sidebar-bg-color: #1e1e2e;
     --sidebar-border-right: 1px solid #45475a;
     --sidebar-padding: 10px;
@@ -117,6 +118,10 @@ body {
     border: var(--search-bar-border);
     background-color: var(--search-bar-bg-color);
     color: var(--search-bar-color);
+    flex-grow: 1;
+    max-width: 400px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .main-content {
@@ -126,6 +131,7 @@ body {
 
 .sidebar {
     width: var(--sidebar-width);
+    max-width: var(--sidebar-max-width);
     background-color: var(--sidebar-bg-color);
     border-right: var(--sidebar-border-right);
     padding: var(--sidebar-padding);
@@ -222,7 +228,6 @@ body {
     box-sizing: border-box;
     background-color: var(--editor-bg-color);
     color: var(--editor-text-color);
-    overflow-y: var(--editor-overflow-y);
 }
 
 .editor textarea {

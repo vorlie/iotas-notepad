@@ -79,6 +79,19 @@ function selectNote(element, index) {
     });
 }
 
+function saveNote() {
+    const notes = getNotesFromLocalStorage();
+    const selectedNoteElement = document.querySelector('.note-list li.selected');
+    if (selectedNoteElement) {
+        const index = Array.from(selectedNoteElement.parentNode.children).indexOf(selectedNoteElement);
+        if (index !== -1) {
+            notes[index].content = document.querySelector('.editor textarea').value;
+            localStorage.setItem("notes", JSON.stringify(notes));
+            document.querySelector('.status').textContent = "All changes saved";
+        }
+    }
+}
+
 function searchNotes(query) {
     const notes = document.querySelectorAll('.note-list li');
     notes.forEach(note => {
@@ -128,7 +141,6 @@ function saveNotesToLocalStorage(notes) {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
-
 function createNoteElement(note, index) {
     const li = document.createElement("li");
     li.textContent = note.title;
@@ -137,9 +149,19 @@ function createNoteElement(note, index) {
     const actions = document.createElement("div");
     actions.className = "note-actions";
 
+    const saveButton = document.createElement("button");
+    saveButton.innerHTML = '<i class="bi bi-floppy-fill"></i>';
+    saveButton.className = "note-button";
+    saveButton.title = "Save note";
+    saveButton.onclick = (e) => {
+        e.stopPropagation();
+        saveNote(index);
+    };
+
     const editButton = document.createElement("button");
     editButton.innerHTML = '<i class="bi bi-pencil-fill"></i>';
     editButton.className = "note-button";
+    editButton.title = "Edit title";
     editButton.onclick = (e) => {
         e.stopPropagation();
         editNoteTitle(index);
@@ -148,11 +170,13 @@ function createNoteElement(note, index) {
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = '<i class="bi bi-trash-fill"></i>';
     deleteButton.className = "note-button";
+    deleteButton.title = "Delete note";
     deleteButton.onclick = (e) => {
         e.stopPropagation();
         deleteNote(index);
     };
 
+    actions.appendChild(saveButton);
     actions.appendChild(editButton);
     actions.appendChild(deleteButton);
     li.appendChild(actions);

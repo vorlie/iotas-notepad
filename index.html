@@ -10,8 +10,8 @@
 <body>
     <div class="titlebar" style="app-region: drag;">
         <h2 class="titlebar-h1" style="app-region: drag;">Iota's Notepad</h2>
+        <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)" style="app-region: no-drag;">
         <div class="titlebar-actions" style="app-region: no-drag;">
-            <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)">
             <button class="button" onclick="exportNotes()">Export</button>
             <input type="file" id="importNotesInput" style="display:none" onchange="importNotes(event)">
             <button class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
