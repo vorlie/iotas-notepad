@@ -19,6 +19,7 @@ app.on('ready', () => {
     symbolColor: 'rgba(205, 214, 244, 1)', // 205, 214, 244
     height: 48
   });
+  mainWindow.setMinimumSize(800, 600);
 
   Menu.setApplicationMenu(null);
 
