@@ -79,6 +79,56 @@ function selectNote(element, index) {
     });
 }
 
+function searchNotes(query) {
+    const notes = document.querySelectorAll('.note-list li');
+    notes.forEach(note => {
+        if (note.textContent.toLowerCase().includes(query.toLowerCase())) {
+            note.style.display = '';
+        } else {
+            note.style.display = 'none';
+        }
+    });
+}
+
+function exportNotes() {
+    const notes = getNotesFromLocalStorage();
+    notes.forEach(note => {
+        const blob = new Blob([note.content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${note.title}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+}
+
+function importNotes(event) {
+    const files = event.target.files;
+    const notes = getNotesFromLocalStorage();
+
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const content = e.target.result;
+            const title = file.name.replace('.txt', '');
+            notes.push({ title, content });
+            saveNotesToLocalStorage(notes);
+            loadNotes();
+        };
+        reader.readAsText(file);
+    });
+}
+
+function getNotesFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('notes')) || [];
+}
+
+function saveNotesToLocalStorage(notes) {
+    localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+
 function createNoteElement(note, index) {
     const li = document.createElement("li");
     li.textContent = note.title;

@@ -1,10 +1,30 @@
 :root {
     --body-display: flex;
+    --body-flex-direction: column;
     --body-height: 100vh;
     --body-margin: 0;
     --body-font-family: Arial, sans-serif;
     --body-background-color: #1e1e2e;
     --body-color: #cdd6f4;
+
+    --titlebar-bg-color: #313244;
+    --titlebar-padding: 10px;
+    --titlebar-color: #cdd6f4;
+    --titlebar-border-bottom: 1px solid #45475a;
+    --titlebar-actions-margin-right: 130px;
+    --titlebar-display: flex;
+    --titlebar-align-items: center;
+    --titlebar-justify-content: space-between;
+
+    --search-bar-padding: 5px;
+    --search-bar-margin-right: 10px;
+    --search-bar-border-radius: 5px;
+    --search-bar-border: 1px solid #6c7086;
+    --search-bar-bg-color: #45475a;
+    --search-bar-color: white;
+
+    --main-content-display: flex;
+    --main-content-flex: 1;
 
     --sidebar-width: 30%;
     --sidebar-bg-color: #1e1e2e;
@@ -30,12 +50,13 @@
     --note-actions-top: 10px;
     --note-actions-button-margin-right: 5px;
 
-    --note-button-bg-color: #45475a;
-    --note-button-bg-color-hover: #6c7086;
-    --note-button-color: white;
-    --note-button-border-color: #6c7086;
-    --note-button-border-radius: 5px;
-    --note-button-padding: 5px;
+    --button-bg-color: #45475a;
+    --button-bg-color-hover: #6c7086;
+    --button-color: white;
+    --button-border-color: #6c7086;
+    --button-border-radius: 5px;
+    --button-padding: 5px;
+    --button-padding-2: 4.2px;
 
     --editor-bg-color: #11111b;
     --editor-font-family: var(--body-font-family);
@@ -61,11 +82,46 @@
 
 body {
     display: var(--body-display);
+    flex-direction: var(--body-flex-direction);
     height: var(--body-height);
     margin: var(--body-margin);
     font-family: var(--body-font-family);
     background-color: var(--body-background-color);
     color: var(--body-color);
+}
+
+.titlebar {
+    background-color: var(--titlebar-bg-color);
+    border-bottom: var(--sidebar-border-right);
+    padding: var(--titlebar-padding);
+    color: var(--titlebar-color);
+    display: var(--titlebar-display);
+    justify-content: var(--titlebar-justify-content);
+    align-items: var(--titlebar-align-items);
+}
+
+.titlebar-actions {
+    margin-right: var(--titlebar-actions-margin-right);
+    display: var(--titlebar-display);
+    align-items: var(--titlebar-align-items);
+}
+
+.titlebar-h1{
+    margin: 0;
+}
+
+.search-bar {
+    padding: var(--search-bar-padding);
+    margin-right: var(--search-bar-margin-right);
+    border-radius: var(--search-bar-border-radius);
+    border: var(--search-bar-border);
+    background-color: var(--search-bar-bg-color);
+    color: var(--search-bar-color);
+}
+
+.main-content {
+    display: var(--main-content-display);
+    flex: var(--main-content-flex);
 }
 
 .sidebar {
@@ -121,37 +177,52 @@ body {
     display: block;
 }
 
+.note-list li.pinned {
+    background-color: #ffeb3b; /* Highlight pinned notes */
+}
+
 .sidebar-header .button {
     margin-right: var(--note-actions-button-margin-right);
-    background-color: var(--note-button-bg-color);
-    color: var(--note-button-color);
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
     font-size: 14px;
-    border-radius: var(--note-button-border-radius);
-    border: 1px solid var(--note-button-border-color);
+    border-radius: var(--button-border-radius);
+    border: 1px solid var(--button-border-color);
+}
+
+.titlebar-actions .button{
+    padding: var(--button-padding-2);
+    margin-right: var(--note-actions-button-margin-right);
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    font-size: 14px;
+    border-radius: var(--button-border-radius);
+    border: 1px solid var(--button-border-color);
 }
 
 .button:hover {
-    background-color: var(--note-button-bg-color-hover);
+    background-color: var(--button-bg-color-hover);
 }
 
 .note-actions .note-button {
     margin-right: var(--note-actions-button-margin-right);
-    background-color: var(--note-button-bg-color);
-    color: var(--note-button-color);
-    border-radius: var(--note-button-border-radius);
-    border: 1px solid var(--note-button-border-color);
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border-radius: var(--button-border-radius);
+    border: 1px solid var(--button-border-color);
 }
 
 .note-button:hover {
-    background-color: var(--note-button-bg-color-hover);
+    background-color: var(--button-bg-color-hover);
 }
 
 .editor {
-    width: 70%;
+    flex: 1;
     padding: 10px;
     box-sizing: border-box;
     background-color: var(--editor-bg-color);
     color: var(--editor-text-color);
+    overflow-y: var(--editor-overflow-y);
 }
 
 .editor textarea {
@@ -163,7 +234,6 @@ body {
     border: var(--editor-border);
     resize: var(--editor-resize);
     outline: var(--editor-outline);
-    overflow-y: var(--editor-overflow-y);
     font-size: var(--editor-font-size);
 }
 
@@ -177,7 +247,8 @@ body {
     border-radius: var(--edit-title-input-border-radius);
     background-color: var(--edit-title-input-bg-color);
 }
-.edit-title-input:focus {
+
+.edit-title-input:focus, .search-bar:focus {
     outline: none;
 }
 
