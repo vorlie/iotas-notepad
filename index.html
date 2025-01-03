@@ -12,9 +12,9 @@
         <h2 class="titlebar-h1" style="app-region: drag;">Iota's Notepad</h2>
         <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)" style="app-region: no-drag;">
         <div class="titlebar-actions" style="app-region: no-drag;">
-            <button class="button" onclick="exportNotes()">Export</button>
+            <button title="Exports a selected note from the modal list" class="button" onclick="openExportModal()">Export</button>
             <input type="file" id="importNotesInput" style="display:none" onchange="importNotes(event)">
-            <button class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
+            <button title="Imports a note" class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
         </div>
     </div>
     <div class="main-content">
@@ -25,10 +25,17 @@
             </div>
             <ul class="note-list">
             </ul>
-            <p class="status"></p>
         </div>
         <div class="editor">
+            <p class="status">Save status:</p>
             <textarea placeholder="Write your note here..."></textarea>
+        </div>
+    </div>
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeExportModal()">&times;</span>
+            <h2 class="modal-h2">Click on an item to export</h2>
+            <ul class="export-note-list"></ul>
         </div>
     </div>
     <script src="src/script.js"></script>

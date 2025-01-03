@@ -48,7 +48,7 @@ function deleteNote(index) {
 function selectNote(element, index) {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const textarea = document.querySelector(".editor textarea");
-    const status = document.querySelector(".sidebar .status");
+    const status = document.querySelector(".editor .status");
 
     // Highlight selected note
     document.querySelectorAll(".note-list li").forEach(note => note.classList.remove("selected"));
@@ -60,12 +60,12 @@ function selectNote(element, index) {
     // Track content changes
     textarea.oninput = () => {
         notes[index].content = textarea.value;
-        status.textContent = "Unsaved changes...";
+        status.textContent = "Save status: Unsaved changes...";
         clearTimeout(saveTimeout);
 
         saveTimeout = setTimeout(() => {
             localStorage.setItem("notes", JSON.stringify(notes));
-            status.textContent = "All changes saved";
+            status.textContent = "Save status: All changes saved";
         }, 10000); // Save after 10 second of inactivity
     };
 
@@ -74,7 +74,7 @@ function selectNote(element, index) {
         if ((e.ctrlKey || e.metaKey) && e.key === "s") {
             e.preventDefault();
             localStorage.setItem("notes", JSON.stringify(notes));
-            status.textContent = "All changes saved";
+            status.textContent = "Save status: All changes saved";
         }
     });
 }
@@ -87,7 +87,7 @@ function saveNote() {
         if (index !== -1) {
             notes[index].content = document.querySelector('.editor textarea').value;
             localStorage.setItem("notes", JSON.stringify(notes));
-            document.querySelector('.status').textContent = "All changes saved";
+            document.querySelector('.status').textContent = "Save status: All changes saved";
         }
     }
 }
@@ -103,17 +103,39 @@ function searchNotes(query) {
     });
 }
 
-function exportNotes() {
+function openExportModal() {
+    const modal = document.getElementById('exportModal');
+    const exportNoteList = document.querySelector('.export-note-list');
+    exportNoteList.innerHTML = ''; // Clear current list
+
     const notes = getNotesFromLocalStorage();
-    notes.forEach(note => {
-        const blob = new Blob([note.content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${note.title}.txt`;
-        a.click();
-        URL.revokeObjectURL(url);
+    notes.forEach((note, index) => {
+        const noteItem = document.createElement('li');
+        noteItem.className = 'export-note-item';
+        noteItem.textContent = note.title;
+        noteItem.onclick = () => exportSelectedNote(index);
+        exportNoteList.appendChild(noteItem);
     });
+
+    modal.style.display = 'block';
+}
+
+function closeExportModal() {
+    const modal = document.getElementById('exportModal');
+    modal.style.display = 'none';
+}
+
+function exportSelectedNote(index) {
+    const notes = getNotesFromLocalStorage();
+    const note = notes[index];
+    const blob = new Blob([note.content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${note.title}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    closeExportModal();
 }
 
 function importNotes(event) {
