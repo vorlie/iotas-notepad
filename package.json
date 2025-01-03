@@ -33,6 +33,8 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "iotas-notepad",
+            "icon": "assets/icon.ico",
+            "setupIcon": "assets/icon.ico",
             "authors": "vorlie",
             "description": "Electron-based Notepad"
           }
