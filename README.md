@@ -15,7 +15,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 1. Download the latest release from the [releases page](https://github.com/vorlie/iotas-notepad/releases).
 2. Download iotas-notepad-<version>-win32-x64-Setup.exe and run the setup file to install the application.
 3. Follow the on-screen instructions to complete the installation.
-4. The app will be installed under C:\Users\USER\AppData\Local\iotas-notepad.
+4. The app will be installed under `C:\Users\USER\AppData\Local\iotas-notepad`.
 
 ## Usage
 
