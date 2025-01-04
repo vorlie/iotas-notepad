@@ -20,7 +20,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
 ## Checking for Updates
 
-Iota's Notepad automatically checks for updates when the application starts. If an update is available, it will be downloaded and installed automatically. You can also manually check for updates by restarting the application.
+Iota's Notepad automatically checks for updates when the application starts. If a new version is available, an in-app notification will inform you about the update, displaying the new version number and providing a download link for the setup file. You can dismiss the notification if you choose not to update immediately. You can also manually check for updates by restarting the application.
 
 ## Usage
 
