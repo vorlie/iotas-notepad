@@ -24,6 +24,15 @@
     --search-bar-border: 1px solid #6c7086;
     --search-bar-bg-color: #45475a;
     --search-bar-color: #cdd6f4;
+    --search-bar-placeholder-color: #a6adc8;
+
+    --sort-dropdown-padding: 2px;
+    --sort-dropdown-margin-right: 2px;
+    --sort-dropdown-border-radius: 5px;
+    --sort-dropdown-border: 1px solid #6c7086;
+    --sort-dropdown-bg-color: #45475a;
+    --sort-dropdown-color: #cdd6f4;
+    --sort-dropdown-font-size: 14px;
 
     --main-content-display: flex;
     --main-content-flex: 1;
@@ -34,21 +43,30 @@
     --sidebar-bg-color: #1e1e2e;
     --sidebar-border-right: 1px solid #45475a;
     --sidebar-padding: 10px;
-    --sidebar-radius: 10px;
+    --sidebar-radius: 8px;
     --sidebar-box-sizing: border-box;
     --sidebar-overflow-y: auto;
     --sidebar-height: 100%;
+    --sidebar-button-padding: 3px 6px 3px 6px;
 
     --note-list-padding: 0;
     --note-list-margin: 5px;
     --note-list-item-margin-right: 3px;
     --note-list-item-padding: 10px;
-    --note-list-item-border-bottom: 1px solid #45475a;
+    --note-list-item-border: 1px solid #45475a;
+    --note-list-item-border-selected: 1px solid #6c7086;
     --note-list-item-cursor: pointer;
     --note-list-item-position: relative;
-    --note-list-item-hover-bg-color: #45475a;
-    --note-list-item-selected-bg-color: #313244;
-    --note-list-item-background-color: #585b70;
+    --note-list-item-hover-bg-color: #585b70;
+    --note-list-item-selected-bg-color: #45475a;
+    --note-list-item-background-color: #313244;
+
+    --note-title-font-size: 1em;
+    --note-title-display: block;
+    --note-date-font-size: 0.8em;
+    --note-date-display: block;
+    --note-date-color: #a6adc8;
+    --note-date-margin-top: 5px;
 
     --note-actions-display: none;
     --note-actions-position: absolute;
@@ -100,15 +118,16 @@
     --modal-close-font-weight: bold;
     --modal-close-hover-color: #f38ba8;
 
-    --modal-export-item-bg-color: #45475a;
+    --modal-export-item-bg-color: #313244;
     --modal-export-item-color: #cdd6f4;
     --modal-export-item-padding: 10px;
     --modal-export-item-border-bottom: 1px solid #6c7086;
-    --modal-export-item-hover-bg-color: #313244;
+    --modal-export-item-hover-bg-color: #585b70;
     --modal-export-item-cursor: pointer;
     --modal-export-item-border-radius: 8px;
     --modal-export-item-margin-bottom: 5px;
     --modal-export-item-margin-right: 3px;
+    --modal-export-item-border: 1px solid #45475a;
 }
 
 body {
@@ -155,6 +174,10 @@ body {
     margin-right: 20px;
 }
 
+.search-bar::placeholder {
+    color: var(--search-bar-placeholder-color);
+}
+
 .main-content {
     display: var(--main-content-display);
     flex: var(--main-content-flex);
@@ -180,6 +203,28 @@ body {
     margin-bottom: 10px;
 }
 
+.sort-dropdown {
+    padding: var(--sort-dropdown-padding);
+    margin-right: var(--sort-dropdown-margin-right);
+    border-radius: var(--sort-dropdown-border-radius);
+    border: var(--sort-dropdown-border);
+    background-color: var(--sort-dropdown-bg-color);
+    color: var(--sort-dropdown-color);
+    font-family: var(--body-font-family);
+    font-size: var(--sort-dropdown-font-size);
+    outline: none;
+    transition: var(--hover-transition);
+}
+
+.sort-dropdown:hover {
+    background-color: var(--button-bg-color-hover);
+}
+
+.sort-dropdown option {
+    background-color: var(--sort-dropdown-bg-color);
+    color: var(--sort-dropdown-color);
+}
+
 .header-h2 {
     margin: 0;
 }
@@ -200,6 +245,7 @@ body {
     position: var(--note-list-item-position);
     margin-bottom: var(--note-list-margin);
     transition: var(--hover-transition);
+    border: var(--note-list-item-border);
     margin-right: var(--note-list-item-margin-right);
 }
 
@@ -209,6 +255,7 @@ body {
 
 .note-list li.selected {
     background-color: var(--note-list-item-selected-bg-color);
+    border: var(--note-list-item-border-selected);
 }
 
 .note-actions {
@@ -223,6 +270,18 @@ body {
     display: block;
 }
 
+.note-title {
+    display: var(--note-title-display); 
+    font-size: var(--note-title-font-size);
+}
+
+.note-date, .note-modified {
+    display: var(--note-date-display); 
+    font-size: var(--note-date-font-size);
+    color: var(--note-date-color);
+    margin-top: var(--note-date-margin-top);
+}
+
 .sidebar-header .button {
     margin-right: var(--note-actions-button-margin-right);
     background-color: var(--button-bg-color);
@@ -231,6 +290,7 @@ body {
     border-radius: var(--button-border-radius);
     border: 1px solid var(--button-border-color);
     transition: var(--hover-transition);
+    padding: var(--sidebar-button-padding);
 }
 
 .titlebar-actions .button{
@@ -388,6 +448,7 @@ body {
     border-radius: var(--modal-export-item-border-radius);
     transition: var(--hover-transition);
     margin-bottom: var(--modal-export-item-margin-bottom);
+    border: var(--modal-export-item-border);
 }
 
 .export-note-item:hover{

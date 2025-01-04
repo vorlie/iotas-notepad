@@ -5,13 +5,41 @@ document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
 });
 
+document.getElementById('sort-options').addEventListener('change', loadNotes);
+
+function sortNotes(notes, option) {
+    switch (option) {
+      case 'index':
+        break;
+      case 'dateCreated':
+        notes.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
+        break;
+      case 'dateModified':
+        notes.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
+        break;
+      case 'alphabetical':
+        notes.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+    }
+  }
+
 function loadNotes() {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const noteList = document.querySelector(".note-list");
     noteList.innerHTML = ""; // Clear current list
 
+    // Update existing notes to include dateCreated and dateModified if missing
+    notes.forEach(note => {
+        if (!note.dateCreated) note.dateCreated = new Date().toISOString();
+        if (!note.dateModified) note.dateModified = new Date().toISOString();
+    });
+    localStorage.setItem("notes", JSON.stringify(notes));
+
+    const sortOption = document.getElementById('sort-options').value;
+    sortNotes(notes, sortOption);
+
     notes.forEach((note, index) => {
-        const noteItem = createNoteElement(note, index);
+        const noteItem = createNoteElement(note, index, sortOption);
         noteList.appendChild(noteItem);
     });
 
@@ -30,12 +58,17 @@ function loadNotes() {
 
 function addNote() {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
-    const newNote = `Note ${notes.length + 1}`; // Temporary note name
-    notes.push({ title: newNote, content: "" });
+    const newNote = {
+        title: `Note ${notes.length + 1}`, // Temporary note name
+        content: "",
+        dateCreated: new Date().toISOString(),
+        dateModified: new Date().toISOString()
+    };
+    notes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
 
     const noteList = document.querySelector(".note-list");
-    noteList.appendChild(createNoteElement({ title: newNote }, notes.length - 1));
+    noteList.appendChild(createNoteElement(newNote, notes.length - 1));
 }
 
 function deleteNote(index) {
@@ -60,19 +93,21 @@ function selectNote(element, index) {
     // Track content changes
     textarea.oninput = () => {
         notes[index].content = textarea.value;
+        notes[index].dateModified = new Date().toISOString(); // Update modification date
         status.textContent = "Save status: Unsaved changes...";
         clearTimeout(saveTimeout);
 
         saveTimeout = setTimeout(() => {
             localStorage.setItem("notes", JSON.stringify(notes));
             status.textContent = "Save status: All changes saved";
-        }, 10000); // Save after 10 second of inactivity
+        }, 10000); // Save after 10 seconds of inactivity
     };
 
     // Save content with Ctrl+S (or Cmd+S)
     document.addEventListener("keydown", (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "s") {
             e.preventDefault();
+            notes[index].dateModified = new Date().toISOString(); // Update modification date
             localStorage.setItem("notes", JSON.stringify(notes));
             status.textContent = "Save status: All changes saved";
         }
@@ -143,15 +178,19 @@ function importNotes(event) {
     const notes = getNotesFromLocalStorage();
 
     Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const content = e.target.result;
-            const title = file.name.replace('.txt', '');
-            notes.push({ title, content });
-            saveNotesToLocalStorage(notes);
-            loadNotes();
-        };
-        reader.readAsText(file);
+        if (file.type === "text/plain") {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const title = file.name.replace('.txt', '');
+                notes.push({ title, content });
+                saveNotesToLocalStorage(notes);
+                loadNotes();
+            };
+            reader.readAsText(file);
+        } else {
+            alert("Only .txt files are allowed.");
+        }
     });
 }
 
@@ -163,10 +202,32 @@ function saveNotesToLocalStorage(notes) {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
-function createNoteElement(note, index) {
+function createNoteElement(note, index, sortOption) {
     const li = document.createElement("li");
-    li.textContent = note.title;
+    li.className = "note-item";
     li.onclick = () => selectNote(li, index);
+
+    const title = document.createElement("span");
+    title.className = "note-title";
+    title.textContent = note.title;
+
+    const date = document.createElement("span");
+    date.className = "note-date";
+
+    switch (sortOption) {
+        case 'index':
+            date.textContent = `Index: ${index + 1}`;
+            break;
+        case 'dateCreated':
+            date.textContent = `Created: ${new Date(note.dateCreated).toLocaleString()}`;
+            break;
+        case 'dateModified':
+            date.textContent = `Modified: ${new Date(note.dateModified).toLocaleString()}`;
+            break;
+        case 'alphabetical':
+            date.textContent = `Modified: ${new Date(note.dateModified).toLocaleString()}`;
+            break;
+    }
 
     const actions = document.createElement("div");
     actions.className = "note-actions";
@@ -177,7 +238,7 @@ function createNoteElement(note, index) {
     saveButton.title = "Save note";
     saveButton.onclick = (e) => {
         e.stopPropagation();
-        saveNote(index);
+        saveNote();
     };
 
     const editButton = document.createElement("button");
@@ -201,6 +262,8 @@ function createNoteElement(note, index) {
     actions.appendChild(saveButton);
     actions.appendChild(editButton);
     actions.appendChild(deleteButton);
+    li.appendChild(title);
+    li.appendChild(date);
     li.appendChild(actions);
 
     return li;

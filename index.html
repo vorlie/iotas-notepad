@@ -13,15 +13,23 @@
         <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)" style="app-region: no-drag;">
         <div class="titlebar-actions" style="app-region: no-drag;">
             <button title="Exports a selected note from the modal list" class="button" onclick="openExportModal()">Export</button>
-            <input type="file" id="importNotesInput" style="display:none" onchange="importNotes(event)">
-            <button title="Imports a note" class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
+            <input type="file" accept=".txt" id="importNotesInput" style="display:none" onchange="importNotes(event)">
+            <button title="Imports a note"  class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
         </div>
     </div>
     <div class="main-content">
         <div class="sidebar">
             <div class="sidebar-header">
                 <h2 class="header-h2">Notes</h2>
-                <button class="button" onclick="addNote()">New</button>
+                <div class="sidebar-actions">
+                    <select id="sort-options" class="sort-dropdown">
+                        <option value="dateModified">Date Modified</option>
+                        <option value="dateCreated">Date Created</option>
+                        <option value="alphabetical">Alphabetical</option>
+                        <option value="index">Index</option>
+                      </select>
+                    <button class="button" onclick="addNote()">New</button>
+                </div>
             </div>
             <ul class="note-list">
             </ul>
