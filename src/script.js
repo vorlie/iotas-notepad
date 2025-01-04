@@ -1,6 +1,6 @@
 let saveTimeout;
 
-const version = "1.0.6";
+const version = "1.0.7";
 
 async function fetchReleases() {
     const response = await fetch('https://api.github.com/repos/vorlie/iotas-notepad/releases');
