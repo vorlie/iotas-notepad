@@ -131,6 +131,7 @@
 
     --updater-background-color: #1e1e2e;
     --updater-text-color: #cdd6f4;
+    --updater-text-download-color: #11111b;
     --updater-button-background-color: #313244;
     --updater-button-hover-background-color: #6c7086;
     --updater-button-download-background-color: #a6e3a1;
@@ -492,7 +493,7 @@ body {
 #download-link {
     display: block;
     margin-top: var(--updater-margin-top);
-    color: var(--updater-text-color);
+    color: var(--updater-text-download-color);
     text-decoration: none;
     background-color: var(--updater-button-download-background-color);
     padding: var(--updater-padding-small);
