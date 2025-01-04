@@ -18,6 +18,10 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 4. The app will be installed under:
     - Windows: `C:\Users\USER\AppData\Local\iotas-notepad`
 
+## Checking for Updates
+
+Iota's Notepad automatically checks for updates when the application starts. If an update is available, it will be downloaded and installed automatically. You can also manually check for updates by restarting the application.
+
 ## Usage
 
 - Click the "New" button to create a new note.

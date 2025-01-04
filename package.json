@@ -12,6 +12,19 @@
   "author": "vorlie",
   "license": "MIT",
   "description": "Electron-based Notepad",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vorlie/iotas-notepad"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "vorlie",
+        "repo": "iotas-notepad"
+      }
+    ]
+  },
   "devDependencies": {
     "@electron-forge/cli": "^7.6.0",
     "@electron-forge/maker-deb": "^7.6.0",
@@ -43,6 +56,8 @@
     }
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-log": "^5.2.4",
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-updater": "^6.3.9"
   }
 }
