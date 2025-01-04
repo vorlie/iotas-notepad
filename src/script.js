@@ -227,6 +227,9 @@ function createNoteElement(note, index, sortOption) {
         case 'alphabetical':
             date.textContent = `Modified: ${new Date(note.dateModified).toLocaleString()}`;
             break;
+        default:
+            date.textContent = `Created: ${new Date(note.dateCreated).toLocaleString()}`;
+            break;
     }
 
     const actions = document.createElement("div");
