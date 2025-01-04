@@ -250,7 +250,7 @@ function createNoteElement(note, index, sortOption) {
     editButton.title = "Edit title";
     editButton.onclick = (e) => {
         e.stopPropagation();
-        editNoteTitle(index);
+        editNoteTitle(note);
     };
 
     const deleteButton = document.createElement("button");
@@ -272,15 +272,15 @@ function createNoteElement(note, index, sortOption) {
     return li;
 }
 
-function editNoteTitle(index) {
+function editNoteTitle(note) {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const noteList = document.querySelector(".note-list");
-    const noteItem = noteList.children[index];
+    const noteItem = Array.from(noteList.children).find(item => item.querySelector(".note-title").textContent === note.title);
 
     // Replace the title with an input field for editing
     const input = document.createElement("input");
     input.type = "text";
-    input.value = notes[index].title;
+    input.value = note.title;
     input.className = "edit-title-input";
 
     // Save the edited title on blur or pressing Enter
@@ -296,7 +296,8 @@ function editNoteTitle(index) {
     function saveTitle() {
         const newTitle = input.value.trim();
         if (newTitle) {
-            notes[index].title = newTitle;
+            const noteIndex = notes.findIndex(n => n.title === note.title);
+            notes[noteIndex].title = newTitle;
             localStorage.setItem("notes", JSON.stringify(notes));
             loadNotes(); // Reload UI
         } else {
