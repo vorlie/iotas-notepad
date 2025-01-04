@@ -1,8 +1,61 @@
 let saveTimeout;
 
+const version = "1.0.6";
+
+async function fetchReleases() {
+    const response = await fetch('https://api.github.com/repos/vorlie/iotas-notepad/releases');
+    const releases = await response.json();
+    return releases;
+}
+
+function isNewerVersion(currentVersion, latestVersion) {
+    const current = currentVersion.split('.').map(Number);
+    const latest = latestVersion.split('.').map(Number);
+
+    for (let i = 0; i < latest.length; i++) {
+        if (latest[i] > (current[i] || 0)) {
+            return true;
+        } else if (latest[i] < (current[i] || 0)) {
+            return false;
+        }
+    }
+    return false;
+}
+
+async function displayReleases() {
+    const releases = await fetchReleases();
+    const latestRelease = releases[0]; // Get the latest release
+
+    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
+        // Show notification
+        const notification = document.getElementById('notification');
+        const message = document.getElementById('message');
+        const downloadLink = document.getElementById('download-link');
+        message.innerText = `New version ${latestRelease.tag_name} is available!`;
+        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
+        downloadLink.innerText = 'Download';
+        downloadLink.onclick = (e) => {
+            e.preventDefault();
+            const link = document.createElement('a');
+            link.href = latestRelease.assets[0].browser_download_url;
+            link.download = '';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+        notification.classList.remove('hidden');
+    }
+}
+
+document.getElementById('dismiss-button').addEventListener('click', () => {
+    const notification = document.getElementById('notification');
+    notification.classList.add('hidden');
+});
+
 // Load notes from local storage on startup
 document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
+    displayReleases();
 });
 
 document.getElementById('sort-options').addEventListener('change', loadNotes);

@@ -27,7 +27,7 @@
                         <option value="dateCreated">Date Created</option>
                         <option value="alphabetical">Alphabetical</option>
                         <option value="index">Index</option>
-                      </select>
+                    </select>
                     <button class="button" onclick="addNote()">New</button>
                 </div>
             </div>
@@ -38,6 +38,11 @@
             <p class="status">Save status:</p>
             <textarea placeholder="Write your note here..."></textarea>
         </div>
+    </div>
+    <div id="notification" class="hidden">
+        <p id="message"></p>
+        <a id="download-link" href="#" target="_blank">Download</a>
+        <button id="dismiss-button">Dismiss</button>
     </div>
     <div id="exportModal" class="modal">
         <div class="modal-content">
