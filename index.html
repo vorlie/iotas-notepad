@@ -47,7 +47,10 @@
     <div id="exportModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeExportModal()">&times;</span>
-            <h2 class="modal-h2">Click on an item to export</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 class="modal-h2">Click on an item to export</h2>
+                <button title="Export all notes as JSON" class="button" onclick="exportAllNotesAsJson()">Export All as JSON</button>
+            </div>
             <ul class="export-note-list"></ul>
         </div>
     </div>
