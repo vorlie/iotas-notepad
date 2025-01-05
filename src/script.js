@@ -1,6 +1,6 @@
 let saveTimeout;
 
-const version = "1.0.8";
+const version = "1.0.9";
 
 async function fetchReleases() {
     const response = await fetch('https://api.github.com/repos/vorlie/iotas-notepad/releases');
@@ -62,29 +62,30 @@ document.getElementById('sort-options').addEventListener('change', loadNotes);
 
 function sortNotes(notes, option) {
     switch (option) {
-      case 'index':
-        break;
-      case 'dateCreated':
-        notes.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
-        break;
-      case 'dateModified':
-        notes.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
-        break;
-      case 'alphabetical':
-        notes.sort((a, b) => a.title.localeCompare(b.title));
-        break;
+        case 'index':
+            break;
+        case 'dateCreated':
+            notes.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
+            break;
+        case 'dateModified':
+            notes.sort((a, b) => new Date(b.dateModified) - new Date(a.dateModified));
+            break;
+        case 'alphabetical':
+            notes.sort((a, b) => a.title.localeCompare(b.title));
+            break;
     }
-  }
+}
 
 function loadNotes() {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const noteList = document.querySelector(".note-list");
     noteList.innerHTML = ""; // Clear current list
 
-    // Update existing notes to include dateCreated and dateModified if missing
+    // Update existing notes to include dateCreated, dateModified, and id if missing
     notes.forEach(note => {
         if (!note.dateCreated) note.dateCreated = new Date().toISOString();
         if (!note.dateModified) note.dateModified = new Date().toISOString();
+        if (!note.id) note.id = generateUniqueId();
     });
     localStorage.setItem("notes", JSON.stringify(notes));
 
@@ -99,7 +100,7 @@ function loadNotes() {
     // Automatically select the first note if it exists
     if (notes.length > 0) {
         const firstNoteElement = noteList.querySelector("li");
-        selectNote(firstNoteElement, 0);
+        selectNoteById(firstNoteElement.dataset.id);
     } else {
         // Clear the editor if no notes exist
         const textarea = document.querySelector(".editor textarea");
@@ -112,6 +113,7 @@ function loadNotes() {
 function addNote() {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const newNote = {
+        id: generateUniqueId(),
         title: `Note ${notes.length + 1}`, // Temporary note name
         content: "",
         dateCreated: new Date().toISOString(),
@@ -124,29 +126,33 @@ function addNote() {
     noteList.appendChild(createNoteElement(newNote, notes.length - 1));
 }
 
-function deleteNote(index) {
-    const notes = JSON.parse(localStorage.getItem("notes")) || [];
-    notes.splice(index, 1); // Remove the note
+function deleteNoteById(id) {
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    notes = notes.filter(note => note.id !== id);
     localStorage.setItem("notes", JSON.stringify(notes));
     loadNotes(); // Reload UI
 }
 
-function selectNote(element, index) {
+function selectNoteById(id) {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
+    const note = notes.find(note => note.id === id);
     const textarea = document.querySelector(".editor textarea");
     const status = document.querySelector(".editor .status");
 
     // Highlight selected note
     document.querySelectorAll(".note-list li").forEach(note => note.classList.remove("selected"));
-    element.classList.add("selected");
+    const selectedNoteElement = document.querySelector(`.note-list li[data-id="${id}"]`);
+    if (selectedNoteElement) {
+        selectedNoteElement.classList.add("selected");
+    }
 
     // Load content into the editor
-    textarea.value = notes[index].content || "";
+    textarea.value = note ? note.content : "";
 
     // Track content changes
     textarea.oninput = () => {
-        notes[index].content = textarea.value;
-        notes[index].dateModified = new Date().toISOString(); // Update modification date
+        note.content = textarea.value;
+        note.dateModified = new Date().toISOString(); // Update modification date
         status.textContent = "Save status: Unsaved changes...";
         clearTimeout(saveTimeout);
 
@@ -160,7 +166,7 @@ function selectNote(element, index) {
     document.addEventListener("keydown", (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "s") {
             e.preventDefault();
-            notes[index].dateModified = new Date().toISOString(); // Update modification date
+            note.dateModified = new Date().toISOString(); // Update modification date
             localStorage.setItem("notes", JSON.stringify(notes));
             status.textContent = "Save status: All changes saved";
         }
@@ -171,9 +177,10 @@ function saveNote() {
     const notes = getNotesFromLocalStorage();
     const selectedNoteElement = document.querySelector('.note-list li.selected');
     if (selectedNoteElement) {
-        const index = Array.from(selectedNoteElement.parentNode.children).indexOf(selectedNoteElement);
-        if (index !== -1) {
-            notes[index].content = document.querySelector('.editor textarea').value;
+        const id = selectedNoteElement.dataset.id;
+        const note = notes.find(note => note.id === id);
+        if (note) {
+            note.content = document.querySelector('.editor textarea').value;
             localStorage.setItem("notes", JSON.stringify(notes));
             document.querySelector('.status').textContent = "Save status: All changes saved";
         }
@@ -197,11 +204,11 @@ function openExportModal() {
     exportNoteList.innerHTML = ''; // Clear current list
 
     const notes = getNotesFromLocalStorage();
-    notes.forEach((note, index) => {
+    notes.forEach((note) => {
         const noteItem = document.createElement('li');
         noteItem.className = 'export-note-item';
         noteItem.textContent = note.title;
-        noteItem.onclick = () => exportSelectedNote(index);
+        noteItem.onclick = () => exportSelectedNoteById(note.id);
         exportNoteList.appendChild(noteItem);
     });
 
@@ -213,9 +220,9 @@ function closeExportModal() {
     modal.style.display = 'none';
 }
 
-function exportSelectedNote(index) {
+function exportSelectedNoteById(id) {
     const notes = getNotesFromLocalStorage();
-    const note = notes[index];
+    const note = notes.find(note => note.id === id);
     const blob = new Blob([note.content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -236,7 +243,7 @@ function importNotes(event) {
             reader.onload = function(e) {
                 const content = e.target.result;
                 const title = file.name.replace('.txt', '');
-                notes.push({ title, content });
+                notes.push({ id: generateUniqueId(), title, content });
                 saveNotesToLocalStorage(notes);
                 loadNotes();
             };
@@ -258,7 +265,8 @@ function saveNotesToLocalStorage(notes) {
 function createNoteElement(note, index, sortOption) {
     const li = document.createElement("li");
     li.className = "note-item";
-    li.onclick = () => selectNote(li, index);
+    li.dataset.id = note.id;
+    li.onclick = () => selectNoteById(note.id);
 
     const title = document.createElement("span");
     title.className = "note-title";
@@ -312,7 +320,7 @@ function createNoteElement(note, index, sortOption) {
     deleteButton.title = "Delete note";
     deleteButton.onclick = (e) => {
         e.stopPropagation();
-        deleteNote(index);
+        deleteNoteById(note.id);
     };
 
     actions.appendChild(saveButton);
@@ -349,7 +357,7 @@ function editNoteTitle(note) {
     function saveTitle() {
         const newTitle = input.value.trim();
         if (newTitle) {
-            const noteIndex = notes.findIndex(n => n.title === note.title);
+            const noteIndex = notes.findIndex(n => n.id === note.id);
             notes[noteIndex].title = newTitle;
             localStorage.setItem("notes", JSON.stringify(notes));
             loadNotes(); // Reload UI
@@ -357,4 +365,8 @@ function editNoteTitle(note) {
             alert("Title cannot be empty!");
         }
     }
+}
+
+function generateUniqueId() {
+    return '_' + Math.random().toString(36).substr(2, 9);
 }
