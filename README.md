@@ -15,6 +15,9 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 - In-app update notifications
 - Search notes
 - Save notes manually with `Ctrl+S` (or `Cmd+S` on macOS)
+- Settings modal
+- 12-hour and 24-hour time formats
+- Selectable Catppuccin Mocha, Frappe and Macchiato flavors.
 
 ## Installation
 
@@ -26,7 +29,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
 ## Checking for Updates
 
-Iota's Notepad automatically checks for updates when the application starts. If a new version is available, an in-app notification will inform you about the update, displaying the new version number and providing a download link for the setup file. You can dismiss the notification if you choose not to update immediately. You can also manually check for updates by restarting the application.
+Iota's Notepad automatically checks for updates when the application starts. If a new version is available, an in-app notification will inform you about the update, displaying the new version number and providing a download link for the setup file. You can dismiss the notification if you choose not to update immediately. You can also manually check for updates by clicking the "Check for Updates" button.
 
 ## Usage
 

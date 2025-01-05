@@ -90,8 +90,32 @@ function applyThemeFlavor() {
     document.documentElement.setAttribute('data-theme', themeFlavor);
 }
 
-function checkForUpdates() {
-    displayReleases();
+async function checkForUpdates() {
+    const releases = await fetchReleases();
+    const latestRelease = releases[0]; // Get the latest release
+
+    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
+        // Show notification for new version
+        const notification = document.getElementById('notification');
+        const message = document.getElementById('message');
+        const downloadLink = document.getElementById('download-link');
+        message.innerText = `New version ${latestRelease.tag_name} is available!`;
+        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
+        downloadLink.innerText = 'Download';
+        downloadLink.onclick = (e) => {
+            e.preventDefault();
+            const link = document.createElement('a');
+            link.href = latestRelease.assets[0].browser_download_url;
+            link.download = '';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+        notification.classList.remove('hidden');
+    } else {
+        // Show popup indicating the app is up-to-date
+        alert('The app is up-to-date.');
+    }
 }
 
 document.getElementById('sort-options').addEventListener('change', loadNotes);
