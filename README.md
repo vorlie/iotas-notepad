@@ -9,6 +9,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 - Delete notes
 - Sort notes by date created, date modified, alphabetical order, and index
 - Export/Import notes
+    - Also possible to export all notes at once in a JSON format
 - Save notes automatically to local storage
 - Customizable UI with CSS variables
 - In-app update notifications
@@ -33,6 +34,7 @@ Iota's Notepad automatically checks for updates when the application starts. If 
 - Click on a note in the sidebar to edit it.
 - Click the "Export" or "Import" to export/import notes.
     - "Export" button opens a modal and from there you can choose which note to export.
+    - Inside the export modal there is a button "Export All as JSON", which will export all notes in a JSON format.
 - Type in the search bar to search notes.
 - Use the buttons next to each note to edit the title, delete the note, or save the note.
 - Notes are saved automatically after 10 seconds of inactivity or when you press `Ctrl+S` (or `Cmd+S` on macOS).
