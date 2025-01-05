@@ -325,7 +325,7 @@ body {
     list-style-type: none;
     padding: var(--note-list-padding);
     margin: 0;
-    height: calc(100% - 40px);
+    height: calc(100% - 65px);
     overflow-y: auto;
 }
 
