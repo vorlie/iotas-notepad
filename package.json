@@ -1,6 +1,6 @@
 {
   "name": "iotas-notepad",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "electron": "electron .",

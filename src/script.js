@@ -1,6 +1,6 @@
 let saveTimeout;
 
-const version = "1.0.9";
+const version = "1.1.0";
 
 async function fetchReleases() {
     const response = await fetch('https://api.github.com/repos/vorlie/iotas-notepad/releases');
@@ -56,7 +56,43 @@ document.getElementById('dismiss-button').addEventListener('click', () => {
 document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
     displayReleases();
+    loadSettings();
+    applyThemeFlavor(); // Apply the saved theme flavor on startup
 });
+
+function openSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'block';
+}
+
+function closeSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'none';
+}
+
+function saveSettings() {
+    const timeFormat = document.getElementById('timeFormat').value;
+    const themeFlavor = document.getElementById('themeFlavor').value;
+    localStorage.setItem('timeFormat', timeFormat);
+    localStorage.setItem('themeFlavor', themeFlavor);
+    closeSettingsModal();
+    loadNotes(); // Reload notes to apply the new time format
+    applyThemeFlavor(); // Apply the new theme flavor
+}
+
+function loadSettings() {
+    const timeFormat = localStorage.getItem('timeFormat') || '12';
+    const themeFlavor = localStorage.getItem('themeFlavor') || 'mocha';
+    document.getElementById('timeFormat').value = timeFormat;
+    document.getElementById('themeFlavor').value = themeFlavor;
+}
+
+function applyThemeFlavor() {
+    const themeFlavor = localStorage.getItem('themeFlavor') || 'mocha';
+    document.documentElement.setAttribute('data-theme', themeFlavor);
+}
+
+function checkForUpdates() {
+    displayReleases();
+}
 
 document.getElementById('sort-options').addEventListener('change', loadNotes);
 
@@ -274,6 +310,29 @@ function saveNotesToLocalStorage(notes) {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
+function formatDate(dateString, isCreatedDate = false) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+
+    const isToday = date.toDateString() === now.toDateString();
+    const isYesterday = date.toDateString() === yesterday.toDateString();
+
+    const timeFormat = localStorage.getItem('timeFormat') || '12';
+    const options = { hour: '2-digit', minute: '2-digit', hour12: timeFormat === '12' };
+
+    if (isCreatedDate) {
+        return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} at ${date.toLocaleTimeString([], options)}`;
+    } else if (isToday) {
+        return `today at ${date.toLocaleTimeString([], options)}`;
+    } else if (isYesterday) {
+        return `yesterday at ${date.toLocaleTimeString([], options)}`;
+    } else {
+        return `${date.toLocaleDateString()} at ${date.toLocaleTimeString([], options)}`;
+    }
+}
+
 function createNoteElement(note, index, sortOption) {
     const li = document.createElement("li");
     li.className = "note-item";
@@ -289,21 +348,22 @@ function createNoteElement(note, index, sortOption) {
 
     switch (sortOption) {
         case 'index':
-            date.textContent = `Index: ${index + 1}`;
+            date.textContent = `Index ${index + 1}`;
             break;
         case 'dateCreated':
-            date.textContent = `Created: ${new Date(note.dateCreated).toLocaleString()}`;
+            date.textContent = `Created ${formatDate(note.dateCreated, true)}`;
             break;
         case 'dateModified':
-            date.textContent = `Modified: ${new Date(note.dateModified).toLocaleString()}`;
+            date.textContent = `Modified ${formatDate(note.dateModified)}`;
             break;
         case 'alphabetical':
-            date.textContent = `Modified: ${new Date(note.dateModified).toLocaleString()}`;
+            date.textContent = `Modified ${formatDate(note.dateModified)}`;
             break;
         default:
-            date.textContent = `Created: ${new Date(note.dateCreated).toLocaleString()}`;
+            date.textContent = `Created ${formatDate(note.dateCreated, true)}`;
             break;
     }
+
 
     const actions = document.createElement("div");
     actions.className = "note-actions";

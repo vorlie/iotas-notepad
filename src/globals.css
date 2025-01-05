@@ -1,38 +1,58 @@
 :root {
+    /* Default Color Variables (Mocha) */
+    --color-bg-dark: #1e1e2e;
+    --color-bg-darker: #11111b;
+    --color-bg-medium: #313244;
+    --color-bg-light: #45475a;
+    --color-border: #6c7086;
+    --color-text: #cdd6f4;
+    --color-placeholder: #a6adc8;
+    --color-hover: #585b70;
+    --color-hover-light: #6c7086;
+    --color-close-hover: #f38ba8;
+    --color-scrollbar-bg: #2e3440;
+    --color-scrollbar-thumb: #4c566a;
+    --color-scrollbar-thumb-hover: #5e81ac;
+    --color-button-download: #b4befe;
+    --color-button-download-hover: #e3e7ff;
+    --color-button-download-text: #11111b;
+
+    /* Other Variables */
     --body-display: flex;
     --body-flex-direction: column;
     --body-height: 100vh;
     --body-margin: 0;
     --body-font-family: Arial, sans-serif;
-    --body-background-color: #1e1e2e;
-    --body-color: #cdd6f4;
+    --body-background-color: var(--color-bg-dark);
+    --body-color: var(--color-text);
 
     --hover-transition: 0.2s ease;
 
-    --titlebar-bg-color: #313244;
+    --titlebar-bg-color: var(--color-bg-medium);
     --titlebar-padding: 10px;
-    --titlebar-color: #cdd6f4;
-    --titlebar-border-bottom: 1px solid #45475a;
+    --titlebar-color: var(--color-text);
+    --titlebar-border-bottom: 1px solid var(--color-border);
     --titlebar-actions-margin-right: 130px;
     --titlebar-display: flex;
     --titlebar-align-items: center;
     --titlebar-justify-content: space-between;
 
     --search-bar-padding: 5px;
-    --search-bar-margin-right: 10px;
-    --search-bar-border-radius: 5px;
-    --search-bar-border: 1px solid #6c7086;
-    --search-bar-bg-color: #45475a;
-    --search-bar-color: #cdd6f4;
-    --search-bar-placeholder-color: #a6adc8;
+    --search-bar-margin-right: 5px;
+    --search-bar-margin-bottom: 5px;
+    --search-bar-border-radius: 8px;
+    --search-bar-border: 1px solid var(--color-border);
+    --search-bar-bg-color: var(--color-bg-light);
+    --search-bar-color: var(--color-text);
+    --search-bar-placeholder-color: var(--color-placeholder);
 
-    --sort-dropdown-padding: 2px;
-    --sort-dropdown-margin-right: 2px;
-    --sort-dropdown-border-radius: 5px;
-    --sort-dropdown-border: 1px solid #6c7086;
-    --sort-dropdown-bg-color: #45475a;
-    --sort-dropdown-color: #cdd6f4;
-    --sort-dropdown-font-size: 14px;
+    --dropdown-padding: 2px;
+    --dropdown-margin-right: 2px;
+    --dropdown-border-radius: 5px;
+    --dropdown-border: 1px solid var(--color-border);
+    --dropdown-bg-color: var(--color-bg-light);
+    --dropdown-color: var(--color-text);
+    --dropdown-font-size: 14px;
 
     --main-content-display: flex;
     --main-content-flex: 1;
@@ -40,8 +60,8 @@
 
     --sidebar-width: 35%;
     --sidebar-max-width: 400px;
-    --sidebar-bg-color: #1e1e2e;
-    --sidebar-border-right: 1px solid #45475a;
+    --sidebar-bg-color: var(--color-bg-dark);
+    --sidebar-border-right: 1px solid var(--color-border);
     --sidebar-padding: 10px;
     --sidebar-radius: 8px;
     --sidebar-box-sizing: border-box;
@@ -53,19 +73,19 @@
     --note-list-margin: 5px;
     --note-list-item-margin-right: 3px;
     --note-list-item-padding: 10px;
-    --note-list-item-border: 1px solid #45475a;
-    --note-list-item-border-selected: 1px solid #6c7086;
+    --note-list-item-border: 1px solid var(--color-border);
+    --note-list-item-border-selected: 1px solid var(--color-border);
     --note-list-item-cursor: pointer;
     --note-list-item-position: relative;
-    --note-list-item-hover-bg-color: #585b70;
-    --note-list-item-selected-bg-color: #45475a;
-    --note-list-item-background-color: #313244;
+    --note-list-item-hover-bg-color: var(--color-hover);
+    --note-list-item-selected-bg-color: var(--color-bg-light);
+    --note-list-item-background-color: var(--color-bg-medium);
 
     --note-title-font-size: 1em;
     --note-title-display: block;
     --note-date-font-size: 0.8em;
     --note-date-display: block;
-    --note-date-color: #a6adc8;
+    --note-date-color: var(--color-placeholder);
     --note-date-margin-top: 5px;
 
     --note-actions-display: none;
@@ -74,30 +94,30 @@
     --note-actions-top: 10px;
     --note-actions-button-margin-right: 5px;
 
-    --button-bg-color: #45475a;
-    --button-bg-color-hover: #6c7086;
-    --button-color: #cdd6f4;
-    --button-border-color: #6c7086;
+    --button-bg-color: var(--color-bg-light);
+    --button-bg-color-hover: var(--color-hover-light);
+    --button-color: var(--color-text);
+    --button-border-color: var(--color-border);
     --button-border-radius: 5px;
     --button-padding: 5px;
     --button-padding-2: 4.2px;
 
-    --editor-bg-color: #11111b;
+    --editor-bg-color: var(--color-bg-darker);
     --editor-font-family: var(--body-font-family);
-    --editor-text-color: #cdd6f4;
+    --editor-text-color: var(--color-text);
     --editor-border: none;
     --editor-resize: none;
     --editor-outline: none;
     --editor-font-size: 16px;
     --editor-overflow-y: auto;
 
-    --scrollbar-bg-color: #2e3440;
-    --scrollbar-thumb-bg-color: #4c566a;
-    --scrollbar-thumb-hover-bg-color: #5e81ac;
+    --scrollbar-bg-color: var(--color-scrollbar-bg);
+    --scrollbar-thumb-bg-color: var(--color-scrollbar-thumb);
+    --scrollbar-thumb-hover-bg-color: var(--color-scrollbar-thumb-hover);
 
-    --edit-title-input-bg-color: #45475a;
-    --edit-title-input-color: #cdd6f4;
-    --edit-title-input-border: 1px solid #6c7086;
+    --edit-title-input-bg-color: var(--color-bg-light);
+    --edit-title-input-color: var(--color-text);
+    --edit-title-input-border: 1px solid var(--color-border);
     --edit-title-input-border-radius: 5px;
     --edit-title-input-padding: 5px;
     --edit-title-input-width: 80%;
@@ -106,43 +126,101 @@
     --modal-bg-color: rgba(0, 0, 0, 0.4);
     
     --modal-content-border-radius: 10px;
-    --modal-content-bg-color: #1e1e2e;
+    --modal-content-bg-color: var(--color-bg-dark);
     --modal-content-margin: 10% auto;
     --modal-content-padding: 20px;
-    --modal-content-border: 1px solid #6c7086;
+    --modal-content-border: 1px solid var(--color-border);
     --modal-content-width: 80%;
     --modal-content-max-width: 600px;
 
-    --modal-close-color: #cdd6f4;
+    --modal-close-color: var(--color-text);
     --modal-close-font-size: 28px;
     --modal-close-font-weight: bold;
-    --modal-close-hover-color: #f38ba8;
+    --modal-close-hover-color: var(--color-close-hover);
 
-    --modal-export-item-bg-color: #313244;
-    --modal-export-item-color: #cdd6f4;
+    --modal-export-item-bg-color: var(--color-bg-medium);
+    --modal-export-item-color: var(--color-text);
     --modal-export-item-padding: 10px;
-    --modal-export-item-border-bottom: 1px solid #6c7086;
-    --modal-export-item-hover-bg-color: #585b70;
+    --modal-export-item-border-bottom: 1px solid var(--color-border);
+    --modal-export-item-hover-bg-color: var(--color-hover);
     --modal-export-item-cursor: pointer;
     --modal-export-item-border-radius: 8px;
     --modal-export-item-margin-bottom: 5px;
     --modal-export-item-margin-right: 3px;
-    --modal-export-item-border: 1px solid #45475a;
+    --modal-export-item-border: 1px solid var(--color-border);
 
-    --updater-background-color: #1e1e2e;
-    --updater-text-color: #cdd6f4;
-    --updater-text-download-color: #11111b;
-    --updater-button-background-color: #313244;
-    --updater-button-hover-background-color: #6c7086;
-    --updater-button-download-background-color: #b4befe;
-    --updater-button-download-hover-background-color: #e3e7ff;
+    --updater-background-color: var(--color-bg-dark);
+    --updater-text-color: var(--color-text);
+    --updater-text-download-color: var(--color-button-download-text);
+    --updater-button-background-color: var(--color-bg-medium);
+    --updater-button-hover-background-color: var(--color-hover-light);
+    --updater-button-download-background-color: var(--color-button-download);
+    --updater-button-download-hover-background-color: var(--color-button-download-hover);
     --updater-padding: 15px;
     --updater-border-radius: 8px;
     --updater-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     --updater-z-index: 1000;
     --updater-margin-top: 10px;
     --updater-padding-small: 5px 10px;
-    --updater-border: 1px solid #45475a;
+    --updater-border: 1px solid var(--color-border);
+}
+
+/* Catppuccin Flavors */
+:root[data-theme='latte'] {
+    --color-bg-dark: #eff1f5;
+    --color-bg-darker: #dce0e8;
+    --color-bg-medium: #e6e9ef;
+    --color-bg-light: #ccd0da;
+    --color-border: #bcc0cc;
+    --color-text: #4c4f69;
+    --color-placeholder: #6c6f85;
+    --color-hover: #dce0e8;
+    --color-hover-light: #b5bfe2;
+    --color-close-hover: #d20f39;
+    --color-scrollbar-bg: #e6e9ef;
+    --color-scrollbar-thumb: #dce0e8;
+    --color-scrollbar-thumb-hover: #b5bfe2;
+    --color-button-download: #7287fd;
+    --color-button-download-hover: #a4b9ef;
+    --color-button-download-text: #eff1f5;
+}
+
+:root[data-theme='frappe'] {
+    --color-bg-dark: #303446;
+    --color-bg-darker: #232634;
+    --color-bg-medium: #292c3c;
+    --color-bg-light: #414559;
+    --color-border: #51576d;
+    --color-text: #c6d0f5;
+    --color-placeholder: #a5adcb;
+    --color-hover: #414559;
+    --color-hover-light: #51576d;
+    --color-close-hover: #e78284;
+    --color-scrollbar-bg: #414559;
+    --color-scrollbar-thumb: #51576d;
+    --color-scrollbar-thumb-hover: #a5adcb;
+    --color-button-download: #8caaee;
+    --color-button-download-hover: #b5bfe2;
+    --color-button-download-text: #303446;
+}
+
+:root[data-theme='macchiato'] {
+    --color-bg-dark: #24273a;
+    --color-bg-darker: #181926;
+    --color-bg-medium: #1e2030;
+    --color-bg-light: #363a4f;
+    --color-border: #494d64;
+    --color-text: #cad3f5;
+    --color-placeholder: #a5adcb;
+    --color-hover: #363a4f;
+    --color-hover-light: #494d64;
+    --color-close-hover: #ed8796;
+    --color-scrollbar-bg: #363a4f;
+    --color-scrollbar-thumb: #494d64;
+    --color-scrollbar-thumb-hover: #a5adcb;
+    --color-button-download: #8aadf4;
+    --color-button-download-hover: #b5bfe2;
+    --color-button-download-text: #24273a;
 }
 
 body {
@@ -178,16 +256,15 @@ body {
 
 .search-bar {
     padding: var(--search-bar-padding);
-    margin-right: var(--search-bar-margin-right);
     border-radius: var(--search-bar-border-radius);
     border: var(--search-bar-border);
     background-color: var(--search-bar-bg-color);
     color: var(--search-bar-color);
-    flex-grow: 1;
-    max-width: 400px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-bottom: var(--search-bar-margin-bottom);
+    width: calc(100% - 0.3 * var(--sidebar-padding));
+    box-sizing: border-box;
 }
+
 
 .search-bar::placeholder {
     color: var(--search-bar-placeholder-color);
@@ -218,26 +295,26 @@ body {
     margin-bottom: 10px;
 }
 
-.sort-dropdown {
-    padding: var(--sort-dropdown-padding);
-    margin-right: var(--sort-dropdown-margin-right);
-    border-radius: var(--sort-dropdown-border-radius);
-    border: var(--sort-dropdown-border);
-    background-color: var(--sort-dropdown-bg-color);
-    color: var(--sort-dropdown-color);
+.dropdown {
+    padding: var(--dropdown-padding);
+    margin-right: var(--dropdown-margin-right);
+    border-radius: var(--dropdown-border-radius);
+    border: var(--dropdown-border);
+    background-color: var(--dropdown-bg-color);
+    color: var(--dropdown-color);
     font-family: var(--body-font-family);
-    font-size: var(--sort-dropdown-font-size);
+    font-size: var(--dropdown-font-size);
     outline: none;
     transition: var(--hover-transition);
 }
 
-.sort-dropdown:hover {
+.dropdown:hover {
     background-color: var(--button-bg-color-hover);
 }
 
-.sort-dropdown option {
-    background-color: var(--sort-dropdown-bg-color);
-    color: var(--sort-dropdown-color);
+.dropdown option {
+    background-color: var(--dropdown-bg-color);
+    color: var(--dropdown-color);
 }
 
 .header-h2 {
@@ -362,8 +439,8 @@ body {
 .editor .status{
     margin: 0;
     padding: 5px;
-    background-color: #1e1e2e;
-    color: #cdd6f4;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text);
     font-size: 14px;
     width: fit-content;
     text-align: left;
@@ -438,7 +515,12 @@ body {
     margin-right: 150px;
     margin-bottom: 10px;
 }
-
+.modal-content label,
+.modal-content select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
 .button:hover {
     background-color: var(--button-bg-color-hover);
 }
@@ -533,4 +615,8 @@ body {
 
 #dismiss-button:hover {
     background-color: var(--updater-button-hover-background-color);
+}
+
+.settings-buttons{
+    margin-top: 10px;
 }

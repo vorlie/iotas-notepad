@@ -10,11 +10,12 @@
 <body>
     <div class="titlebar" style="app-region: drag;">
         <h2 class="titlebar-h1" style="app-region: drag;">Iota's Notepad</h2>
-        <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)" style="app-region: no-drag;">
         <div class="titlebar-actions" style="app-region: no-drag;">
             <button title="Exports a selected note from the modal list" class="button" onclick="openExportModal()">Export</button>
             <input type="file" accept=".txt" id="importNotesInput" style="display:none" onchange="importNotes(event)">
             <button title="Imports a note"  class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
+            <button class="button" onclick="checkForUpdates()">Check for Updates</button>
+            <button title="Open settings" class="button" onclick="openSettingsModal()">Settings</button>
         </div>
     </div>
     <div class="main-content">
@@ -22,7 +23,7 @@
             <div class="sidebar-header">
                 <h2 class="header-h2">Notes</h2>
                 <div class="sidebar-actions">
-                    <select id="sort-options" class="sort-dropdown">
+                    <select id="sort-options" class="dropdown">
                         <option value="dateModified">Date Modified</option>
                         <option value="dateCreated">Date Created</option>
                         <option value="alphabetical">Alphabetical</option>
@@ -31,6 +32,7 @@
                     <button class="button" onclick="addNote()">New</button>
                 </div>
             </div>
+            <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)">
             <ul class="note-list">
             </ul>
         </div>
@@ -52,6 +54,28 @@
                 <button title="Export all notes as JSON" class="button" onclick="exportAllNotesAsJson()">Export All as JSON</button>
             </div>
             <ul class="export-note-list"></ul>
+        </div>
+    </div>
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <h2 class="modal-h2">Settings</h2>
+            <label for="timeFormat">Time Format:</label>
+            <select id="timeFormat" class="dropdown">
+                <option value="12">12-hour</option>
+                <option value="24">24-hour</option>
+            </select>
+            <label for="themeFlavor">Theme Flavor:</label>
+            <select id="themeFlavor" class="dropdown">
+                <option value="mocha">Mocha</option>
+                <!-- <option value="latte">Latte</option> -->
+                <!-- Commented because i have no idea how to make the window controls symbol colors change based on contrast -->
+                <option value="frappe">Frappe</option>
+                <option value="macchiato">Macchiato</option>
+            </select>
+            <div class="settings-buttons">
+                <button class="button" onclick="saveSettings()">Save settings</button>
+            </div>
         </div>
     </div>
     <script src="src/script.js"></script>
