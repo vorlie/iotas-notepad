@@ -29,7 +29,7 @@
                         <option value="alphabetical">Alphabetical</option>
                         <option value="index">Index</option>
                     </select>
-                    <button class="button" onclick="addNote()">New</button>
+                    <button class="button" onclick="addNote()"><i class="bi bi-plus-lg"></i></button>
                 </div>
             </div>
             <input type="text" class="search-bar" placeholder="Search notes..." oninput="searchNotes(this.value)">
@@ -77,6 +77,15 @@
                 <button class="button" onclick="saveSettings()">Save settings</button>
             </div>
         </div>
+    </div>
+    <div id="noteContextMenu" class="context-menu">
+        <p id="contextMenuNoteId"></p>
+        <hr class="context-menu-divider">
+        <ul>
+            <li onclick="saveNote()"><i class="bi bi-floppy-fill"></i> Save</li>
+            <li onclick="editNoteTitle()"><i class="bi bi-pencil-fill"></i> Edit Title</li>
+            <li onclick="deleteNoteById()"><i class="bi bi-trash-fill"></i> Delete</li>
+        </ul>
     </div>
     <script src="src/script.js"></script>
 </body>

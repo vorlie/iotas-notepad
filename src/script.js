@@ -58,6 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
     displayReleases();
     loadSettings();
     applyThemeFlavor(); // Apply the saved theme flavor on startup
+
+    document.addEventListener('click', (event) => {
+        const contextMenu = document.getElementById('noteContextMenu');
+        if (contextMenu.style.display === 'block' && !contextMenu.contains(event.target)) {
+            contextMenu.style.display = 'none';
+        }
+    });
 });
 
 function openSettingsModal() {
@@ -186,10 +193,12 @@ function addNote() {
     noteList.appendChild(createNoteElement(newNote, notes.length - 1));
 }
 
-function deleteNoteById(id) {
-    let notes = JSON.parse(localStorage.getItem("notes")) || [];
-    notes = notes.filter(note => note.id !== id);
-    localStorage.setItem("notes", JSON.stringify(notes));
+function deleteNoteById() {
+    const noteId = document.getElementById('noteContextMenu').dataset.noteId;
+    //const note = notes.find(note => note.id === noteId);
+    let notes = getNotesFromLocalStorage();
+    notes = notes.filter(note => note.id !== noteId);
+    saveNotesToLocalStorage(notes);
     loadNotes(); // Reload UI
 }
 
@@ -362,6 +371,7 @@ function createNoteElement(note, index, sortOption) {
     li.className = "note-item";
     li.dataset.id = note.id;
     li.onclick = () => selectNoteById(note.id);
+    li.oncontextmenu = (e) => openContextMenu(e, note.id);
 
     const title = document.createElement("span");
     title.className = "note-title";
@@ -372,66 +382,61 @@ function createNoteElement(note, index, sortOption) {
 
     switch (sortOption) {
         case 'index':
-            date.textContent = `Index ${index + 1}`;
+            date.textContent = `ID: ${note.id} • Index ${index + 1}`;
             break;
         case 'dateCreated':
-            date.textContent = `Created ${formatDate(note.dateCreated, true)}`;
+            date.textContent = `ID: ${note.id} • Created ${formatDate(note.dateCreated, true)}`;
             break;
         case 'dateModified':
-            date.textContent = `Modified ${formatDate(note.dateModified)}`;
+            date.textContent = `ID: ${note.id} • Modified ${formatDate(note.dateModified)}`;
             break;
         case 'alphabetical':
-            date.textContent = `Modified ${formatDate(note.dateModified)}`;
+            date.textContent = `ID: ${note.id} • Modified ${formatDate(note.dateModified)}`;
             break;
         default:
-            date.textContent = `Created ${formatDate(note.dateCreated, true)}`;
+            date.textContent = `ID: ${note.id} • Created ${formatDate(note.dateCreated, true)}`;
             break;
     }
 
-
-    const actions = document.createElement("div");
-    actions.className = "note-actions";
-
-    const saveButton = document.createElement("button");
-    saveButton.innerHTML = '<i class="bi bi-floppy-fill"></i>';
-    saveButton.className = "note-button";
-    saveButton.title = "Save note";
-    saveButton.onclick = (e) => {
-        e.stopPropagation();
-        saveNote();
-    };
-
-    const editButton = document.createElement("button");
-    editButton.innerHTML = '<i class="bi bi-pencil-fill"></i>';
-    editButton.className = "note-button";
-    editButton.title = "Edit title";
-    editButton.onclick = (e) => {
-        e.stopPropagation();
-        editNoteTitle(note);
-    };
-
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = '<i class="bi bi-trash-fill"></i>';
-    deleteButton.className = "note-button";
-    deleteButton.title = "Delete note";
-    deleteButton.onclick = (e) => {
-        e.stopPropagation();
-        deleteNoteById(note.id);
-    };
-
-    actions.appendChild(saveButton);
-    actions.appendChild(editButton);
-    actions.appendChild(deleteButton);
     li.appendChild(title);
     li.appendChild(date);
-    li.appendChild(actions);
 
     return li;
 }
 
-function editNoteTitle(note) {
+function openContextMenu(event, noteId) {
+    event.preventDefault();
+    const contextMenu = document.getElementById('noteContextMenu');
+    const { clientX: mouseX, clientY: mouseY } = event;
+    const { innerWidth: windowWidth, innerHeight: windowHeight } = window;
+    const { offsetWidth: menuWidth, offsetHeight: menuHeight } = contextMenu;
+
+    let top = mouseY;
+    let left = mouseX;
+
+    if (mouseX + menuWidth > windowWidth) {
+        left = windowWidth - menuWidth;
+    }
+
+    if (mouseY + menuHeight > windowHeight) {
+        top = windowHeight - menuHeight;
+    }
+
+    // Set the note ID for context menu actions
+    contextMenu.dataset.noteId = noteId;
+    document.getElementById('contextMenuNoteId').innerText = `Note ID: ${noteId}`;
+
+    // Show the context menu
+    contextMenu.style.display = 'block';
+    contextMenu.style.left = `${left}px`;
+    contextMenu.style.top = `${top}px`;
+}
+
+function editNoteTitle() {
+    const noteId = document.getElementById('noteContextMenu').dataset.noteId;
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const noteList = document.querySelector(".note-list");
+    const note = notes.find(note => note.id === noteId);
     const noteItem = Array.from(noteList.children).find(item => item.querySelector(".note-title").textContent === note.title);
 
     // Replace the title with an input field for editing

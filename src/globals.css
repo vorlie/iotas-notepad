@@ -39,7 +39,7 @@
 
     --search-bar-padding: 5px;
     --search-bar-margin-right: 5px;
-    --search-bar-margin-bottom: 5px;
+    --search-bar-margin-bottom: 10px;
     --search-bar-border-radius: 8px;
     --search-bar-border: 1px solid var(--color-border);
     --search-bar-bg-color: var(--color-bg-light);
@@ -263,6 +263,7 @@ body {
     margin-bottom: var(--search-bar-margin-bottom);
     width: calc(100% - 0.3 * var(--sidebar-padding));
     box-sizing: border-box;
+    margin-bottom: var(--search-bar-margin-bottom);
 }
 
 
@@ -325,7 +326,7 @@ body {
     list-style-type: none;
     padding: var(--note-list-padding);
     margin: 0;
-    height: calc(100% - 65px);
+    height: calc(100% - 70px);
     overflow-y: auto;
 }
 
@@ -397,19 +398,6 @@ body {
 }
 
 .button:hover {
-    background-color: var(--button-bg-color-hover);
-}
-
-.note-actions .note-button {
-    margin-right: var(--note-actions-button-margin-right);
-    background-color: var(--button-bg-color);
-    color: var(--button-color);
-    border-radius: var(--button-border-radius);
-    border: 1px solid var(--button-border-color);
-    transition: var(--hover-transition);
-}
-
-.note-button:hover {
     background-color: var(--button-bg-color-hover);
 }
 
@@ -504,6 +492,7 @@ body {
     max-height: 80vh;
     overflow: hidden;
 }
+
 .modal .button {
     background-color: var(--button-bg-color);
     color: var(--button-color);
@@ -515,15 +504,18 @@ body {
     margin-right: 150px;
     margin-bottom: 10px;
 }
+
 .modal-content label,
 .modal-content select {
     display: block;
     width: 100%;
     margin-bottom: 10px;
 }
+
 .button:hover {
     background-color: var(--button-bg-color-hover);
 }
+
 .modal-h2{
     margin: 0px 0px 10px 0px;
 }
@@ -583,9 +575,11 @@ body {
     box-shadow: var(--updater-box-shadow);
     z-index: var(--updater-z-index);
 }
+
 #notification #message {
     margin: 0;
 }
+
 #download-link {
     display: block;
     margin-top: var(--updater-margin-top);
@@ -619,4 +613,45 @@ body {
 
 .settings-buttons{
     margin-top: 10px;
+}
+
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: var(--color-bg-medium);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu li {
+    padding: 8px;
+    cursor: pointer;
+    color: var(--color-text);
+}
+
+.context-menu li:hover {
+    background-color: var(--color-hover);
+}
+
+.context-menu-divider{
+    border: 0;
+    margin: 0;
+    height: 1px;
+    background-color: var(--color-border);
+}
+
+#contextMenuNoteId{
+    padding: 0;
+    margin: 5px;
+    font-size: var(--note-date-font-size);
+    color: var(--note-date-color);
+    margin-top: var(--note-date-margin-top);
 }
