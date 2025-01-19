@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iota's Notepad - Developer Options</title>
+    <style>
+        h1{
+            margin: 0 0 20px;
+
+        }
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+        button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin: 2px 0;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            border: 1px solid #555;
+            box-shadow: 0 0 10px black;
+            z-index: 1000;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+        }
+        #modal h2 {
+            margin: 0 0 10px;
+        }
+        #modal pre {
+            white-space: pre-wrap; /* Handle line breaks and long text */
+            word-wrap: break-word; /* Break long words */
+        }
+    </style>
+</head>
+<body>
+    <h1>Developer Options</h1>
+    <button onclick="refreshStorage()">Refresh Local Storage</button>
+    <div id="dev-tools">
+        <table id="storage-table">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for displaying key-value -->
+    <div id="modal">
+        <h2>Key Details</h2>
+        <p id="modal-key"><strong>Key:</strong> </p>
+        <pre id="modal-value"></pre>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+
+        // Function to refresh the storage view
+        function refreshStorage() {
+            console.log("Refreshing local storage...");
+
+            const tableBody = document.querySelector("#storage-table tbody");
+            tableBody.innerHTML = ""; // Clear previous rows
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${key}</td>
+                    <td>
+                        <button onclick="viewKey('${key}')">View</button>
+                        <button onclick="deleteKey('${key}')">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
+
+        // Function to view key-value in a modal
+        function viewKey(key) {
+            console.log(`Viewing key: ${key}`);
+
+            const value = localStorage.getItem(key);
+            const modal = document.getElementById("modal");
+            const overlay = document.getElementById("overlay");
+
+            document.getElementById("modal-key").innerHTML = `<strong>Key:</strong> ${key}`;
+
+            // Process the value for JSON or format \n
+            try {
+                // Try parsing JSON and pretty-print
+                console.log("Attempting to parse JSON value...");
+                document.getElementById("modal-value").textContent = JSON.stringify(JSON.parse(value), null, 2);
+            } catch {
+                // Replace \n with actual line breaks for non-JSON
+                console.log("Value is not JSON, replacing line breaks...");
+                document.getElementById("modal-value").innerHTML = value.replace(/\n/g, "<br>");
+            }
+
+            modal.style.display = "block";
+            overlay.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            console.log("Closing modal...");
+            document.getElementById("modal").style.display = "none";
+        }
+
+        // Function to delete a key from local storage
+        function deleteKey(key) {
+            console.log(`Deleting key: ${key}`);
+            localStorage.removeItem(key);
+            refreshStorage();
+        }
+
+        // Handle Escape key to close modal
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                console.log("Escape key pressed, closing modal...");
+                closeModal();
+            }
+        });
+
+        // Initial load
+        console.log("Loading initial local storage...");
+        refreshStorage();
+    </script>
+</body>
+</html>
+    

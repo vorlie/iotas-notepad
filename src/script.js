@@ -1,6 +1,6 @@
 let saveTimeout;
 
-const version = "1.1.3";
+const version = "1.1.4";
 const electronVersion = "33.2.1";
 
 const defaultThemes = {
@@ -59,6 +59,10 @@ const defaultThemes = {
         '--color-button-download-text': '#303446'
     }
 };
+
+document.getElementById('open-dev-options').addEventListener('click', () => {
+    window.electron.openDevWindow();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     loadNotes();

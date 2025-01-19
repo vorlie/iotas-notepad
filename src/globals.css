@@ -505,7 +505,7 @@ body {
     margin-bottom: 10px;
 }
 
-.settings-button, .update-button{
+.settings-button, .about-button{
     background-color: var(--button-bg-color);
     color: var(--button-color);
     border: 1px solid var(--button-border-color);
@@ -528,7 +528,7 @@ body {
     width: 45%; /* Set fixed width for sections */
 }
 
-.button:hover, .settings-button:hover, .update-button:hover {
+.button:hover, .settings-button:hover, .about-button:hover {
     background-color: var(--button-bg-color-hover);
 }
 
