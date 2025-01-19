@@ -4,21 +4,27 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
 ## Features
 
-- Create new notes
-- Edit existing notes
-- Delete notes
-- Sort notes by date created, date modified, alphabetical order, and index
-- Export/Import notes
-    - Also possible to export all notes at once in a JSON format
-- Save notes automatically to local storage
-- Customizable UI with CSS variables
-- In-app update notifications
-- Search notes
-- Save notes manually with `Ctrl+S` (or `Cmd+S` on macOS)
-- Settings modal
-- 12-hour and 24-hour time formats
-- Selectable Catppuccin Mocha, Frappe, and Macchiato flavors
-- **Import and apply custom themes**
+- **Create new notes**: Easily create new notes for quick note-taking.
+- **Edit existing notes**: Modify previously created notes with ease.
+- **Delete notes**: Remove notes that are no longer needed.
+- **Sort notes by**:
+  - **Date created**: Organize notes by their creation date.
+  - **Date modified**: Sort notes based on the last modification date.
+  - **Alphabetical order**: Arrange notes alphabetically.
+  - **Index**: Sort notes by a custom index value.
+- **Export/Import notes**:
+  - **Export all notes at once in a JSON format**: Save all notes into a JSON file for backup or sharing.
+  - **Import notes**: Easily import notes from a JSON file.
+- **Search notes**: Quickly search through all notes to find specific content.
+- **Save notes automatically to local storage**: Notes are saved automatically without requiring manual intervention.
+- **Save notes manually with `Ctrl+S` (or `Cmd+S` on macOS)**: Use the keyboard shortcut to manually save your notes.
+- **In-app update notifications**: Stay informed when updates are available for the app.
+- **Settings modal**: Access app settings for customizing functionality and preferences.
+- **12-hour and 24-hour time formats**: Choose between 12-hour and 24-hour time format for note timestamps.
+- **Selectable Catppuccin Mocha, Frappe, and Macchiato flavors**: Choose from three Catppuccin theme flavors for a personalized interface.
+- **Import and apply custom themes**: Customize the UI colors by importing and applying your own themes.
+- **Developer Options**: Access local storage viewer, console logs, and debugging tools for troubleshooting and advanced configuration.
+
 
 ## Installation
 
