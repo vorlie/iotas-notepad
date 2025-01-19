@@ -1,13 +1,71 @@
 let saveTimeout;
 
-const version = "1.1.2";
+const version = "1.1.3";
 const electronVersion = "33.2.1";
+
+const defaultThemes = {
+    mocha: {
+        '--color-bg-dark': '#1e1e2e',
+        '--color-bg-darker': '#11111b',
+        '--color-bg-medium': '#313244',
+        '--color-bg-light': '#45475a',
+        '--color-border': '#6c7086',
+        '--color-text': '#cdd6f4',
+        '--color-placeholder': '#a6adc8',
+        '--color-hover': '#585b70',
+        '--color-hover-light': '#6c7086',
+        '--color-close-hover': '#f38ba8',
+        '--color-scrollbar-bg': '#2e3440',
+        '--color-scrollbar-thumb': '#4c566a',
+        '--color-scrollbar-thumb-hover': '#5e81ac',
+        '--color-button-download': '#b4befe',
+        '--color-button-download-hover': '#e3e7ff',
+        '--color-button-download-text': '#11111b'
+    },
+    macchiato: {
+        '--color-bg-dark': '#24273a',
+        '--color-bg-darker': '#181926',
+        '--color-bg-medium': '#1e2030',
+        '--color-bg-light': '#363a4f',
+        '--color-border': '#494d64',
+        '--color-text': '#cad3f5',
+        '--color-placeholder': '#a5adcb',
+        '--color-hover': '#363a4f',
+        '--color-hover-light': '#494d64',
+        '--color-close-hover': '#ed8796',
+        '--color-scrollbar-bg': '#363a4f',
+        '--color-scrollbar-thumb': '#494d64',
+        '--color-scrollbar-thumb-hover': '#a5adcb',
+        '--color-button-download': '#8aadf4',
+        '--color-button-download-hover': '#b5bfe2',
+        '--color-button-download-text': '#24273a'
+    },
+    frappe: {
+        '--color-bg-dark': '#303446',
+        '--color-bg-darker': '#232634',
+        '--color-bg-medium': '#292c3c',
+        '--color-bg-light': '#414559',
+        '--color-border': '#51576d',
+        '--color-text': '#c6d0f5',
+        '--color-placeholder': '#a5adcb',
+        '--color-hover': '#414559',
+        '--color-hover-light': '#51576d',
+        '--color-close-hover': '#e78284',
+        '--color-scrollbar-bg': '#414559',
+        '--color-scrollbar-thumb': '#51576d',
+        '--color-scrollbar-thumb-hover': '#a5adcb',
+        '--color-button-download': '#8caaee',
+        '--color-button-download-hover': '#b5bfe2',
+        '--color-button-download-text': '#303446'
+    }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
     displayReleases();
     loadSettings();
     applyThemeFlavor(); // Apply the saved theme flavor on startup
+    updateThemeDropdown();
 
     document.getElementById('appVersion').textContent = `Version: ${version}`;
     document.getElementById('electronVersion').textContent = `Electron Version: ${electronVersion}`;
@@ -97,7 +155,83 @@ function loadSettings() {
 
 function applyThemeFlavor() {
     const themeFlavor = localStorage.getItem('themeFlavor') || 'mocha';
-    document.documentElement.setAttribute('data-theme', themeFlavor);
+    loadTheme(themeFlavor);
+}
+
+function importTheme(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const customThemes = JSON.parse(e.target.result);
+                for (const [name, theme] of Object.entries(customThemes)) {
+                    saveCustomTheme(name, theme);
+                }
+                updateThemeDropdown();
+                alert('Themes imported successfully!');
+            } catch (error) {
+                alert('Invalid JSON file.');
+            }
+        };
+        reader.readAsText(file);
+    }
+}
+
+function deleteSelectedTheme() {
+    const themeDropdown = document.getElementById('themeFlavor');
+    const selectedTheme = themeDropdown.value;
+    const customThemes = getCustomThemes();
+    if (customThemes[selectedTheme]) {
+        delete customThemes[selectedTheme];
+        localStorage.setItem('customThemes', JSON.stringify(customThemes));
+        updateThemeDropdown();
+        alert('Theme deleted successfully!');
+    } else {
+        alert('Cannot delete default themes.');
+    }
+}
+
+function updateThemeDropdown() {
+    const themeDropdown = document.getElementById('themeFlavor');
+    const customThemes = getCustomThemes();
+    // Clear existing custom themes
+    themeDropdown.querySelectorAll('.custom-theme').forEach(option => option.remove());
+    // Append custom themes
+    for (const name of Object.keys(customThemes)) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        option.classList.add('custom-theme');
+        themeDropdown.appendChild(option);
+    }
+}
+
+function saveCustomTheme(name, theme) {
+    const customThemes = JSON.parse(localStorage.getItem('customThemes')) || {};
+    customThemes[name] = theme;
+    localStorage.setItem('customThemes', JSON.stringify(customThemes));
+}
+
+function getCustomThemes() {
+    return JSON.parse(localStorage.getItem('customThemes')) || {};
+}
+
+function applyTheme(theme) {
+    const root = document.documentElement;
+    for (const [key, value] of Object.entries(theme)) {
+        root.style.setProperty(key, value);
+    }
+}
+
+function loadTheme(themeName) {
+    const customThemes = getCustomThemes();
+    const theme = customThemes[themeName] || defaultThemes[themeName];
+    if (theme) {
+        applyTheme(theme);
+    } else {
+        document.documentElement.setAttribute('data-theme', themeName);
+    }
 }
 
 async function checkForUpdates() {

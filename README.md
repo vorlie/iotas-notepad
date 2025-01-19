@@ -17,7 +17,8 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 - Save notes manually with `Ctrl+S` (or `Cmd+S` on macOS)
 - Settings modal
 - 12-hour and 24-hour time formats
-- Selectable Catppuccin Mocha, Frappe and Macchiato flavors.
+- Selectable Catppuccin Mocha, Frappe, and Macchiato flavors
+- **Import and apply custom themes**
 
 ## Installation
 
@@ -42,6 +43,48 @@ Iota's Notepad automatically checks for updates when the application starts. If 
 - Right-click on a note to open the context menu, where you can edit the title, delete the note, or save the note.
 - Notes are saved automatically after 10 seconds of inactivity or when you press `Ctrl+S` (or `Cmd+S` on macOS).
 - Sort notes using the dropdown menu in the sidebar by date created, date modified, alphabetical order, or index.
+- **Import and apply custom themes**:
+    - Click the "Import Theme" button in the settings modal to import a custom theme from a JSON file.
+    - Select the imported theme from the "Theme Flavor" dropdown to apply it.
+    - Click the "Delete Selected Theme" button to remove a custom theme.
+
+## Adding Custom Themes
+
+You can add custom themes to Iota's Notepad by importing a JSON file with the theme definitions. Follow these steps:
+
+1. **Create a JSON file** with your custom theme definitions. The JSON file should follow this structure:
+    ```json
+    {
+        "customThemeName": {
+            "--color-bg-dark": "#yourColor",
+            "--color-bg-darker": "#yourColor",
+            "--color-bg-medium": "#yourColor",
+            "--color-bg-light": "#yourColor",
+            "--color-border": "#yourColor",
+            "--color-text": "#yourColor",
+            "--color-placeholder": "#yourColor",
+            "--color-hover": "#yourColor",
+            "--color-hover-light": "#yourColor",
+            "--color-close-hover": "#yourColor",
+            "--color-scrollbar-bg": "#yourColor",
+            "--color-scrollbar-thumb": "#yourColor",
+            "--color-scrollbar-thumb-hover": "#yourColor",
+            "--color-button-download": "#yourColor",
+            "--color-button-download-hover": "#yourColor",
+            "--color-button-download-text": "#yourColor"
+        }
+    }
+    ```
+2. **Import the JSON file**:
+    - Open the settings modal by clicking the "Settings" button.
+    - Click the "Import theme" button and select your JSON file.
+    - The custom theme will be added to the "Theme Flavor" dropdown.
+3. **Apply the custom theme**:
+    - Select the imported theme from the "Theme Flavor" dropdown.
+    - Click the "Save settings" button to apply the theme.
+4. **Delete a custom theme**:
+    - Select the custom theme from the "Theme Flavor" dropdown.
+    - Click the "Delete theme" button to remove the theme.
 
 ## Screenshots
 

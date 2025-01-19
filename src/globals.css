@@ -505,6 +505,17 @@ body {
     margin-bottom: 10px;
 }
 
+.settings-button, .update-button{
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    border-radius: var(--button-border-radius);
+    padding: var(--button-padding);
+    cursor: pointer;
+    transition: var(--hover-transition);
+    margin-bottom: 10px;
+}
+
 .modal-content label,
 .modal-content select {
     display: block;
@@ -512,7 +523,12 @@ body {
     margin-bottom: 10px;
 }
 
-.button:hover {
+.settings-section,
+.about-section {
+    width: 45%; /* Set fixed width for sections */
+}
+
+.button:hover, .settings-button:hover, .update-button:hover {
     background-color: var(--button-bg-color-hover);
 }
 
@@ -613,10 +629,6 @@ body {
 
 #dismiss-button:hover {
     background-color: var(--updater-button-hover-background-color);
-}
-
-.settings-buttons{
-    margin-top: 10px;
 }
 
 .context-menu {

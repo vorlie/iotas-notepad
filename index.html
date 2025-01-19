@@ -61,7 +61,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeSettingsModal()">&times;</span>
             <div style="display: flex; justify-content: space-between;">
-                <div>
+                <div class="settings-section">
                     <h2 class="modal-h2">Settings</h2>
                     <label for="timeFormat">Time Format:</label>
                     <select id="timeFormat" class="dropdown">
@@ -69,7 +69,7 @@
                         <option value="24">24-hour</option>
                     </select>
                     <label for="themeFlavor">Theme Flavor:</label>
-                    <select id="themeFlavor" class="dropdown">
+                    <select id="themeFlavor" class="dropdown" onchange="loadTheme(this.value)">
                         <option value="mocha">Mocha</option>
                         <!-- <option value="latte">Latte</option> -->
                         <!-- Commented because i have no idea how to make the window controls symbol colors change based on contrast -->
@@ -77,15 +77,18 @@
                         <option value="macchiato">Macchiato</option>
                     </select>
                     <div class="settings-buttons">
-                        <button class="button" onclick="saveSettings()">Save settings</button>
+                        <button class="settings-button" onclick="document.getElementById('importThemeInput').click()">Import theme</button>
+                        <input type="file" accept=".json" id="importThemeInput" style="display:none" onchange="importTheme(event)">
+                        <button class="settings-button" onclick="deleteSelectedTheme()">Delete theme</button>
+                        <button class="settings-button" onclick="saveSettings()">Save settings</button>
                     </div>
                 </div>
                 <div class="divider"></div>
-                <div>
+                <div class="about-section">
                     <h2 class="modal-h2">About</h2>
                     <p id="appVersion">Version: </p>
                     <p id="electronVersion">Electron Version: </p>
-                    <button class="button" onclick="checkForUpdates()">Check for Updates</button>
+                    <button class="update-button" onclick="checkForUpdates()">Check for Updates</button>
                 </div>
             </div>
         </div>
