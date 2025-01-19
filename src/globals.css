@@ -580,9 +580,14 @@ body {
     margin: 0;
 }
 
-#download-link {
-    display: block;
+#notification-buttons {
+    display: flex;
+    gap: 10px; /* Adjust the gap between buttons as needed */
     margin-top: var(--updater-margin-top);
+}
+
+#download-link {
+    font-size: 14px;
     color: var(--updater-text-download-color);
     text-decoration: none;
     background-color: var(--updater-button-download-background-color);
@@ -597,7 +602,6 @@ body {
 }
 
 #dismiss-button {
-    margin-top: var(--updater-margin-top);
     padding: var(--updater-padding-small);
     background-color: var(--updater-button-background-color);
     color: var(--updater-text-color);
@@ -654,4 +658,10 @@ body {
     font-size: var(--note-date-font-size);
     color: var(--note-date-color);
     margin-top: var(--note-date-margin-top);
+}
+
+.divider {
+    width: 1px;
+    background-color: var(--color-border);
+    margin: 0 20px;
 }

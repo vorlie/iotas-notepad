@@ -1,6 +1,6 @@
 {
   "name": "iotas-notepad",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "index.js",
   "scripts": {
     "electron": "electron .",
@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "electron-log": "^5.2.4",
-    "electron-squirrel-startup": "^1.0.1",
-    "electron-updater": "^6.3.9"
+    "electron-squirrel-startup": "^1.0.1"
   }
 }

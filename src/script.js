@@ -1,6 +1,24 @@
 let saveTimeout;
 
-const version = "1.1.1";
+const version = "1.1.2";
+const electronVersion = "33.2.1";
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadNotes();
+    displayReleases();
+    loadSettings();
+    applyThemeFlavor(); // Apply the saved theme flavor on startup
+
+    document.getElementById('appVersion').textContent = `Version: ${version}`;
+    document.getElementById('electronVersion').textContent = `Electron Version: ${electronVersion}`;
+
+    document.addEventListener('click', (event) => {
+        const contextMenu = document.getElementById('noteContextMenu');
+        if (contextMenu.style.display === 'block' && !contextMenu.contains(event.target)) {
+            contextMenu.style.display = 'none';
+        }
+    });
+});
 
 async function fetchReleases() {
     const response = await fetch('https://api.github.com/repos/vorlie/iotas-notepad/releases');
@@ -50,21 +68,6 @@ async function displayReleases() {
 document.getElementById('dismiss-button').addEventListener('click', () => {
     const notification = document.getElementById('notification');
     notification.classList.add('hidden');
-});
-
-// Load notes from local storage on startup
-document.addEventListener("DOMContentLoaded", () => {
-    loadNotes();
-    displayReleases();
-    loadSettings();
-    applyThemeFlavor(); // Apply the saved theme flavor on startup
-
-    document.addEventListener('click', (event) => {
-        const contextMenu = document.getElementById('noteContextMenu');
-        if (contextMenu.style.display === 'block' && !contextMenu.contains(event.target)) {
-            contextMenu.style.display = 'none';
-        }
-    });
 });
 
 function openSettingsModal() {

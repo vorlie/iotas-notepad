@@ -13,8 +13,7 @@
         <div class="titlebar-actions" style="app-region: no-drag;">
             <button title="Exports a selected note from the modal list" class="button" onclick="openExportModal()">Export</button>
             <input type="file" accept=".txt" id="importNotesInput" style="display:none" onchange="importNotes(event)">
-            <button title="Imports a note"  class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
-            <button class="button" onclick="checkForUpdates()">Check for Updates</button>
+            <button title="Imports a note" class="button" onclick="document.getElementById('importNotesInput').click()">Import</button>
             <button title="Open settings" class="button" onclick="openSettingsModal()">Settings</button>
         </div>
     </div>
@@ -43,8 +42,10 @@
     </div>
     <div id="notification" class="hidden">
         <p id="message"></p>
-        <a id="download-link" href="#" target="_blank">Download</a>
-        <button id="dismiss-button">Dismiss</button>
+        <div id="notification-buttons">
+            <a id="download-link" href="#" target="_blank">Download</a>
+            <button id="dismiss-button">Dismiss</button>
+        </div>
     </div>
     <div id="exportModal" class="modal">
         <div class="modal-content">
@@ -59,22 +60,33 @@
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeSettingsModal()">&times;</span>
-            <h2 class="modal-h2">Settings</h2>
-            <label for="timeFormat">Time Format:</label>
-            <select id="timeFormat" class="dropdown">
-                <option value="12">12-hour</option>
-                <option value="24">24-hour</option>
-            </select>
-            <label for="themeFlavor">Theme Flavor:</label>
-            <select id="themeFlavor" class="dropdown">
-                <option value="mocha">Mocha</option>
-                <!-- <option value="latte">Latte</option> -->
-                <!-- Commented because i have no idea how to make the window controls symbol colors change based on contrast -->
-                <option value="frappe">Frappe</option>
-                <option value="macchiato">Macchiato</option>
-            </select>
-            <div class="settings-buttons">
-                <button class="button" onclick="saveSettings()">Save settings</button>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <h2 class="modal-h2">Settings</h2>
+                    <label for="timeFormat">Time Format:</label>
+                    <select id="timeFormat" class="dropdown">
+                        <option value="12">12-hour</option>
+                        <option value="24">24-hour</option>
+                    </select>
+                    <label for="themeFlavor">Theme Flavor:</label>
+                    <select id="themeFlavor" class="dropdown">
+                        <option value="mocha">Mocha</option>
+                        <!-- <option value="latte">Latte</option> -->
+                        <!-- Commented because i have no idea how to make the window controls symbol colors change based on contrast -->
+                        <option value="frappe">Frappe</option>
+                        <option value="macchiato">Macchiato</option>
+                    </select>
+                    <div class="settings-buttons">
+                        <button class="button" onclick="saveSettings()">Save settings</button>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div>
+                    <h2 class="modal-h2">About</h2>
+                    <p id="appVersion">Version: </p>
+                    <p id="electronVersion">Electron Version: </p>
+                    <button class="button" onclick="checkForUpdates()">Check for Updates</button>
+                </div>
             </div>
         </div>
     </div>

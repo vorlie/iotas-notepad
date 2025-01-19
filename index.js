@@ -1,9 +1,4 @@
 const { app, BrowserWindow, Menu } = require('electron');
-const { autoUpdater } = require('electron-updater');
-const log = require('electron-log');
-
-log.transports.file.level = 'info';
-autoUpdater.logger = log;
 
 let mainWindow;
 
@@ -30,10 +25,6 @@ app.on('ready', () => {
 
   mainWindow.loadFile('index.html');
 
-  // Check for updates
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
 });
 
 app.on('window-all-closed', () => {
@@ -41,13 +32,3 @@ app.on('window-all-closed', () => {
 });
 
 if (require('electron-squirrel-startup')) app.quit();
-
-// Auto-updater event listeners
-autoUpdater.on('update-available', () => {
-  log.info('Update available.');
-});
-
-autoUpdater.on('update-downloaded', () => {
-  log.info('Update downloaded; will install now');
-  autoUpdater.quitAndInstall();
-});
