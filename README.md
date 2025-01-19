@@ -85,6 +85,9 @@ You can add custom themes to Iota's Notepad by importing a JSON file with the th
 4. **Delete a custom theme**:
     - Select the custom theme from the "Theme Flavor" dropdown.
     - Click the "Delete theme" button to remove the theme.
+5. **Preview and Apply a Theme**:
+    - Select a theme from the dropdown to preview it.
+    - Save the settings to apply the chosen theme permanently.
 
 ## Screenshots
 
