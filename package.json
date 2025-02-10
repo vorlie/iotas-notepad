@@ -34,7 +34,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
     "@electron-forge/plugin-fuses": "^7.6.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "^34.0.1"
+    "electron": "^34.1.1"
   },
   "config": {
     "forge": {
