@@ -1,7 +1,7 @@
 let saveTimeout;
 
-const version = "1.1.4";
-const electronVersion = "34.0.0";
+const version = "1.1.5";
+const electronVersion = "34.2.0";
 
 const defaultThemes = {
     mocha: {
