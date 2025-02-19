@@ -1,6 +1,6 @@
 let saveTimeout;
 
-const version = "1.1.5";
+const version = "1.1.6";
 const electronVersion = "34.2.0";
 
 const defaultThemes = {
@@ -83,14 +83,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function fetchReleases() {
-    const response = await fetch('https://api.github.com/repos/vorlie/iotas-notepad/releases');
+    const response = await fetch(
+        "https://api.github.com/repos/vorlie/iotas-notepad/releases",
+    );
     const releases = await response.json();
     return releases;
 }
 
 function isNewerVersion(currentVersion, latestVersion) {
-    const current = currentVersion.split('.').map(Number);
-    const latest = latestVersion.split('.').map(Number);
+    const current = currentVersion.split(".").map(Number);
+    const latest = latestVersion.split(".").map(Number);
 
     for (let i = 0; i < latest.length; i++) {
         if (latest[i] > (current[i] || 0)) {
@@ -108,23 +110,105 @@ async function displayReleases() {
 
     if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
         // Show notification
-        const notification = document.getElementById('notification');
-        const message = document.getElementById('message');
-        const downloadLink = document.getElementById('download-link');
+        const notification = document.getElementById("notification");
+        const message = document.getElementById("message");
+        const downloadLink = document.getElementById("download-link");
         message.innerText = `New version ${latestRelease.tag_name} is available!`;
         downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
-        downloadLink.innerText = 'Download';
+        downloadLink.innerText = "Download";
         downloadLink.onclick = (e) => {
             e.preventDefault();
-            const link = document.createElement('a');
-            link.href = latestRelease.assets[0].browser_download_url;
-            link.download = '';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const downloadUrl = latestRelease.assets[0].browser_download_url;
+            const fileName = latestRelease.assets[0].name;
+            notification.classList.add("hidden");
+            downloadFile(downloadUrl, fileName);
         };
-        notification.classList.remove('hidden');
+        notification.classList.remove("hidden");
     }
+}
+
+async function checkForUpdates() {
+    const releases = await fetchReleases();
+    const latestRelease = releases[0]; // Get the latest release
+
+    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
+        // Show notification for new version
+        const notification = document.getElementById("notification");
+        const message = document.getElementById("message");
+        const downloadLink = document.getElementById("download-link");
+        message.innerText = `New version ${latestRelease.tag_name} is available!`;
+        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
+        downloadLink.innerText = "Download";
+        downloadLink.onclick = (e) => {
+            e.preventDefault();
+            const downloadUrl = latestRelease.assets[0].browser_download_url;
+            const fileName = latestRelease.assets[0].name;
+            notification.classList.add("hidden");
+            downloadFile(downloadUrl, fileName);
+        };
+        notification.classList.remove("hidden");
+    } else {
+        // Show popup indicating the app is up-to-date
+        alert("The app is up-to-date.");
+    }
+}
+
+function downloadFile(url, fileName) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.responseType = "blob";
+
+    // Create progress bar elements
+    const progressDiv = document.createElement("div");
+    progressDiv.style.width = "100%";
+    progressDiv.style.backgroundColor = "var(--color-bg-light)";
+    progressDiv.style.padding = "5px";
+    progressDiv.style.borderTop = "1px solid var(--color-border)";
+
+    const fileNameDisplay = document.createElement("div");
+    fileNameDisplay.textContent = `Downloading: ${fileName}`;
+    fileNameDisplay.style.color = "var(--color-text)";
+    fileNameDisplay.style.marginBottom = "5px";
+
+    const progressBar = document.createElement("div");
+    progressBar.style.width = "0%";
+    progressBar.style.height = "5px";
+    progressBar.style.backgroundColor = "var(--color-button-download)";
+    progressBar.style.borderRadius = "5px";
+    progressBar.style.padding = "5px";
+
+    progressDiv.appendChild(fileNameDisplay);
+    progressDiv.appendChild(progressBar);
+    document.body.appendChild(progressDiv);
+
+    xhr.onprogress = (event) => {
+        if (event.lengthComputable) {
+            const percentComplete = (event.loaded / event.total) * 100;
+            progressBar.style.width = percentComplete + "%";
+        }
+    };
+
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const blob = xhr.response;
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = fileName; // Use the provided filename
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(downloadUrl);
+        }
+        document.body.removeChild(progressDiv); // Remove progress bar after download
+    };
+
+    xhr.onerror = () => {
+        console.error("Download failed");
+        document.body.removeChild(progressDiv); // Remove progress bar on error
+    };
+
+    xhr.send();
 }
 
 document.getElementById('dismiss-button').addEventListener('click', () => {
@@ -166,7 +250,7 @@ function importTheme(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             try {
                 const customThemes = JSON.parse(e.target.result);
                 for (const [name, theme] of Object.entries(customThemes)) {
@@ -235,34 +319,6 @@ function loadTheme(themeName) {
         applyTheme(theme);
     } else {
         document.documentElement.setAttribute('data-theme', themeName);
-    }
-}
-
-async function checkForUpdates() {
-    const releases = await fetchReleases();
-    const latestRelease = releases[0]; // Get the latest release
-
-    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
-        // Show notification for new version
-        const notification = document.getElementById('notification');
-        const message = document.getElementById('message');
-        const downloadLink = document.getElementById('download-link');
-        message.innerText = `New version ${latestRelease.tag_name} is available!`;
-        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
-        downloadLink.innerText = 'Download';
-        downloadLink.onclick = (e) => {
-            e.preventDefault();
-            const link = document.createElement('a');
-            link.href = latestRelease.assets[0].browser_download_url;
-            link.download = '';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-        notification.classList.remove('hidden');
-    } else {
-        // Show popup indicating the app is up-to-date
-        alert('The app is up-to-date.');
     }
 }
 
@@ -462,7 +518,7 @@ function importNotes(event) {
     Array.from(files).forEach(file => {
         if (file.type === "text/plain") {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const content = e.target.result;
                 const title = file.name.replace('.txt', '');
                 notes.push({ id: generateUniqueId(), title, content });
