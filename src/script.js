@@ -1,7 +1,10 @@
 let saveTimeout;
 
-const version = "1.1.7";
-const electronVersion = "34.2.0";
+const version = window.API.versions.iotanotepad();
+const electronVersion = window.API.versions.electron();
+const nodeVersion = window.API.versions.node();
+const chromeVersion = window.API.versions.chrome();
+
 
 const defaultThemes = {
     mocha: {
@@ -73,6 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById('appVersion').textContent = `Version: ${version}`;
     document.getElementById('electronVersion').textContent = `Electron Version: ${electronVersion}`;
+    document.getElementById('nodeVersion').textContent = `Node.js Version: ${nodeVersion}`;
+    document.getElementById('chromeVersion').textContent = `Chrome Version: ${chromeVersion}`;
 
     document.addEventListener('click', (event) => {
         const contextMenu = document.getElementById('noteContextMenu');
