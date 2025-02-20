@@ -1,7 +1,8 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Tray, Menu, ipcMain, Notification } = require('electron');
+const path = require('path');
 
 let mainWindow;
-let devWindow;
+let tray = null;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
@@ -29,38 +30,64 @@ app.on('ready', () => {
   mainWindow.loadFile('index.html');
 
   mainWindow.on('closed', () => {
-    app.quit(); 
+    app.quit();
   });
 
-  ipcMain.on('open-dev-window', () => {
-    createDevWindow();
+  ipcMain.on('show-notification', (event, title, body) => {
+    showNotification(title, body);
   });
+
+  ipcMain.on('open-dev-tools', () => {
+    if (mainWindow) {
+      mainWindow.webContents.openDevTools();
+    }
+  });
+
+  tray = new Tray(path.join(__dirname, 'assets/icon.png'));
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Check for Updates', click: () => {
+        console.log("Check for Updates menu item clicked"); // Add this line
+        if (mainWindow) {
+          mainWindow.webContents.send('check-for-updates'); // Send to renderer
+        }
+      }
+    },
+    { type: 'separator' },
+    { label: 'Quit', click: () => app.quit() }
+  ]);
+  tray.setToolTip('Iota\'s Notepad');
+  tray.setContextMenu(contextMenu);
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit(); 
+  if (process.platform !== 'darwin') app.quit();
 });
 
 if (require('electron-squirrel-startup')) app.quit();
 
-function createDevWindow() {
-  if (devWindow) {
-    devWindow.focus();
-    return;
+function showNotification(title, body) {
+  if (Notification.isSupported()) {
+    let iconPath;
+    iconPath = path.join(__dirname, 'assets', 'icon.png');
+
+    const notification = new Notification({
+      title: title,
+      body: body,
+      icon: iconPath,
+    });
+
+    notification.on('click', () => {
+      console.log('Notification clicked');
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+      }
+    });
+
+    notification.show();
+  } else {
+    console.log('Notifications are not supported on this system.');
   }
-
-  devWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-    },
-    title: "Iota's Notepad - Developer Options"
-  });
-
-  devWindow.loadFile('developer-options.html');
-
-  devWindow.on('closed', () => {
-    devWindow = null;
-  });
 }
+

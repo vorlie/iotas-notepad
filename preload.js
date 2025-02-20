@@ -1,7 +1,9 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-// Expose only specific APIs to the renderer
-contextBridge.exposeInMainWorld('electron', {
-  openDevWindow: () => ipcRenderer.send('open-dev-window'),
+contextBridge.exposeInMainWorld('API', {
+  sendNotification: (title, body) => ipcRenderer.send('show-notification', title, body),
+  openDevTools: () => ipcRenderer.send('open-dev-tools'),
+  on: (channel, func) => ipcRenderer.on(channel, func),
+  send: (channel, ...args) => ipcRenderer.send(channel, ...args),
+  removeListener: (channel, func) => ipcRenderer.removeListener(channel, func)
 });
-

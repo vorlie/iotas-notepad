@@ -1,6 +1,6 @@
 let saveTimeout;
 
-const version = "1.1.6";
+const version = "1.1.7";
 const electronVersion = "34.2.0";
 
 const defaultThemes = {
@@ -60,8 +60,8 @@ const defaultThemes = {
     }
 };
 
-document.getElementById('open-dev-options').addEventListener('click', () => {
-    window.electron.openDevWindow();
+document.getElementById('open-dev-tools').addEventListener('click', () => {
+    window.API.openDevTools();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -114,6 +114,7 @@ async function displayReleases() {
         const message = document.getElementById("message");
         const downloadLink = document.getElementById("download-link");
         message.innerText = `New version ${latestRelease.tag_name} is available!`;
+        window.API.sendNotification('Update Available', 'A new version of the app is available.');
         downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
         downloadLink.innerText = "Download";
         downloadLink.onclick = (e) => {
@@ -127,6 +128,11 @@ async function displayReleases() {
     }
 }
 
+window.API.on('check-for-updates', () => {
+    console.log("Received check-for-updates event");
+    checkForUpdates();
+});
+
 async function checkForUpdates() {
     const releases = await fetchReleases();
     const latestRelease = releases[0]; // Get the latest release
@@ -137,6 +143,7 @@ async function checkForUpdates() {
         const message = document.getElementById("message");
         const downloadLink = document.getElementById("download-link");
         message.innerText = `New version ${latestRelease.tag_name} is available!`;
+        window.API.sendNotification('Update Available', 'A new version of the app is available.');
         downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
         downloadLink.innerText = "Download";
         downloadLink.onclick = (e) => {
@@ -149,7 +156,7 @@ async function checkForUpdates() {
         notification.classList.remove("hidden");
     } else {
         // Show popup indicating the app is up-to-date
-        alert("The app is up-to-date.");
+        window.API.sendNotification("No Updates Available", "The app is up-to-date.");
     }
 }
 
@@ -257,9 +264,10 @@ function importTheme(event) {
                     saveCustomTheme(name, theme);
                 }
                 updateThemeDropdown();
-                alert('Themes imported successfully!');
+                window.API.sendNotification('Theme Imported', 'Custom theme imported successfully.');
             } catch (error) {
-                alert('Invalid JSON file.');
+                console.error(error);
+                window.API.sendNotification('Theme Import Failed', 'Invalid theme file.');
             }
         };
         reader.readAsText(file);
@@ -274,9 +282,9 @@ function deleteSelectedTheme() {
         delete customThemes[selectedTheme];
         localStorage.setItem('customThemes', JSON.stringify(customThemes));
         updateThemeDropdown();
-        alert('Theme deleted successfully!');
+        window.API.sendNotification('Theme Deleted', 'Custom theme deleted successfully.');
     } else {
-        alert('Cannot delete default themes.');
+        window.API.sendNotification('Theme Deletion Failed', 'Cannot delete default themes.');
     }
 }
 
@@ -527,7 +535,7 @@ function importNotes(event) {
             };
             reader.readAsText(file);
         } else {
-            alert("Only .txt files are allowed.");
+            window.API.sendNotification('Import Failed', 'Invalid file format. Please import .txt files only.');
         }
     });
 }
@@ -660,7 +668,7 @@ function editNoteTitle() {
             localStorage.setItem("notes", JSON.stringify(notes));
             loadNotes(); // Reload UI
         } else {
-            alert("Title cannot be empty!");
+            window.API.sendNotification('Invalid Title', 'Title cannot be empty.');
         }
     }
 }

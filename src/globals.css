@@ -73,7 +73,7 @@
     --note-list-margin: 5px;
     --note-list-item-margin-right: 3px;
     --note-list-item-padding: 10px;
-    --note-list-item-border: 1px solid var(--color-border);
+    --note-list-item-border: 1px solid transparent;
     --note-list-item-border-selected: 1px solid var(--color-border);
     --note-list-item-cursor: pointer;
     --note-list-item-position: relative;
