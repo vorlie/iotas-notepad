@@ -87,24 +87,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-async function fetchReleases() {
-    const response = await fetch(
-        "https://api.github.com/repos/vorlie/iotas-notepad/releases",
-    );
+async function fetchReleases(isMica) {
+    const response = await fetch("https://api.github.com/repos/vorlie/iotas-notepad/releases");
+    if (!response.ok) {
+        console.error("Failed to fetch releases:", response.statusText);
+        return null;
+    }
+
     const releases = await response.json();
-    return releases;
+
+    return releases.find(release => {
+        const tag = release.tag_name;
+        return isMica ? tag.includes("-mica") : !tag.includes("-mica");
+    });
 }
 
 function isNewerVersion(currentVersion, latestVersion) {
-    const current = currentVersion.split(".").map(Number);
-    const latest = latestVersion.split(".").map(Number);
+    const cleanVersion = (v) => v.replace(/-mica$/, ""); // Remove "-mica" if present
+
+    const current = cleanVersion(currentVersion).split(".").map(Number);
+    const latest = cleanVersion(latestVersion).split(".").map(Number);
 
     for (let i = 0; i < latest.length; i++) {
-        if (latest[i] > (current[i] || 0)) {
-            return true;
-        } else if (latest[i] < (current[i] || 0)) {
-            return false;
-        }
+        if (latest[i] > (current[i] || 0)) return true;
+        if (latest[i] < (current[i] || 0)) return false;
     }
     return false;
 }
@@ -139,31 +145,43 @@ window.API.on('check-for-updates', () => {
 });
 
 async function checkForUpdates() {
-    const releases = await fetchReleases();
+    const isMica = window.API.versions.iotanotepad().includes("-mica"); // Detect if running Mica version
+    const releases = await fetchReleases(isMica);
+    
+    if (!releases || releases.length === 0) {
+        console.error("No valid releases found.");
+        return;
+    }
+
     const latestRelease = releases[0]; // Get the latest release
 
-    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
+    if (latestRelease && isNewerVersion(window.API.versions.iotanotepad(), latestRelease.tag_name)) {
         // Show notification for new version
         const notification = document.getElementById("notification");
         const message = document.getElementById("message");
         const downloadLink = document.getElementById("download-link");
+        
         message.innerText = `New version ${latestRelease.tag_name} is available!`;
-        window.API.sendNotification('Update Available', 'A new version of the app is available.');
-        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
+        window.API.sendNotification("Update Available", "A new version of the app is available.");
+
+        const downloadUrl = latestRelease.assets[0].browser_download_url;
+        const fileName = latestRelease.assets[0].name;
+
+        downloadLink.href = downloadUrl; 
         downloadLink.innerText = "Download";
         downloadLink.onclick = (e) => {
             e.preventDefault();
-            const downloadUrl = latestRelease.assets[0].browser_download_url;
-            const fileName = latestRelease.assets[0].name;
             notification.classList.add("hidden");
             downloadFile(downloadUrl, fileName);
         };
+
         notification.classList.remove("hidden");
     } else {
         // Show popup indicating the app is up-to-date
         window.API.sendNotification("No Updates Available", "The app is up-to-date.");
     }
 }
+
 
 function downloadFile(url, fileName) {
     const xhr = new XMLHttpRequest();
