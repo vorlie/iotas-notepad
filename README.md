@@ -1,4 +1,4 @@
-# Iota's Notepad
+# Iota's Notepad - Mica
 
 Iota's Notepad is a simple note-taking application built with Electron. It allows you to create, edit, and delete notes with a user-friendly interface.
 
@@ -63,9 +63,13 @@ You can add custom themes to Iota's Notepad by importing a JSON file with the th
     {
         "customThemeName": {
             "--color-bg-dark": "#yourColor",
+            "--color-bg-dark-alpha": "#yourColorWithAlpha",
             "--color-bg-darker": "#yourColor",
+            "--color-bg-darker-alpha": "#yourColorWithAlpha",
             "--color-bg-medium": "#yourColor",
+            "--color-bg-medium-alpha": "#yourColorWithAlpha",
             "--color-bg-light": "#yourColor",
+            "--color-bg-light-alpha": "#yourColorWithAlpha",
             "--color-border": "#yourColor",
             "--color-text": "#yourColor",
             "--color-placeholder": "#yourColor",
