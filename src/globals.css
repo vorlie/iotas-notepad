@@ -1,9 +1,13 @@
 :root {
     /* Default Color Variables (Mocha) */
     --color-bg-dark: #1e1e2e;
+    --color-bg-dark-alpha: #1e1e2e70;
     --color-bg-darker: #11111b;
+    --color-bg-darker-alpha: #11111b70;
     --color-bg-medium: #313244;
+    --color-bg-medium-alpha: #31324470;
     --color-bg-light: #45475a;
+    --color-bg-light-alpha: #45475a70;
     --color-border: #6c7086;
     --color-text: #cdd6f4;
     --color-placeholder: #a6adc8;
@@ -23,12 +27,12 @@
     --body-height: 100vh;
     --body-margin: 0;
     --body-font-family: Arial, sans-serif;
-    --body-background-color: var(--color-bg-dark);
+    --body-background-color: var(--color-bg-dark-alpha);
     --body-color: var(--color-text);
 
     --hover-transition: 0.2s ease;
 
-    --titlebar-bg-color: var(--color-bg-medium);
+    --titlebar-bg-color: var(--color-bg-medium-alpha);
     --titlebar-padding: 10px;
     --titlebar-color: var(--color-text);
     --titlebar-border-bottom: 1px solid var(--color-border);
@@ -42,7 +46,7 @@
     --search-bar-margin-bottom: 10px;
     --search-bar-border-radius: 8px;
     --search-bar-border: 1px solid var(--color-border);
-    --search-bar-bg-color: var(--color-bg-light);
+    --search-bar-bg-color: var(--color-bg-light-alpha);
     --search-bar-color: var(--color-text);
     --search-bar-placeholder-color: var(--color-placeholder);
 
@@ -50,7 +54,7 @@
     --dropdown-margin-right: 2px;
     --dropdown-border-radius: 5px;
     --dropdown-border: 1px solid var(--color-border);
-    --dropdown-bg-color: var(--color-bg-light);
+    --dropdown-bg-color: var(--color-bg-light-alpha);
     --dropdown-color: var(--color-text);
     --dropdown-font-size: 14px;
 
@@ -60,7 +64,8 @@
 
     --sidebar-width: 35%;
     --sidebar-max-width: 400px;
-    --sidebar-bg-color: var(--color-bg-dark);
+    --sidebar-bg-color: var(--color-bg-dark-alpha);
+    --sidebar-bg-color-alpha: var(--color-bg-dark-alpha);
     --sidebar-border-right: 1px solid var(--color-border);
     --sidebar-padding: 10px;
     --sidebar-radius: 8px;
@@ -78,8 +83,8 @@
     --note-list-item-cursor: pointer;
     --note-list-item-position: relative;
     --note-list-item-hover-bg-color: var(--color-hover);
-    --note-list-item-selected-bg-color: var(--color-bg-light);
-    --note-list-item-background-color: var(--color-bg-medium);
+    --note-list-item-selected-bg-color: var(--color-bg-light-alpha);
+    --note-list-item-background-color: var(--color-bg-medium-alpha);
 
     --note-title-font-size: 1em;
     --note-title-display: block;
@@ -94,7 +99,7 @@
     --note-actions-top: 10px;
     --note-actions-button-margin-right: 5px;
 
-    --button-bg-color: var(--color-bg-light);
+    --button-bg-color: var(--color-bg-light-alpha);
     --button-bg-color-hover: var(--color-hover-light);
     --button-color: var(--color-text);
     --button-border-color: var(--color-border);
@@ -102,7 +107,7 @@
     --button-padding: 5px;
     --button-padding-2: 4.2px;
 
-    --editor-bg-color: var(--color-bg-darker);
+    --editor-bg-color: var(--color-bg-darker-alpha);
     --editor-font-family: var(--body-font-family);
     --editor-text-color: var(--color-text);
     --editor-border: none;
@@ -115,7 +120,7 @@
     --scrollbar-thumb-bg-color: var(--color-scrollbar-thumb);
     --scrollbar-thumb-hover-bg-color: var(--color-scrollbar-thumb-hover);
 
-    --edit-title-input-bg-color: var(--color-bg-light);
+    --edit-title-input-bg-color: var(--color-bg-light-alpha);
     --edit-title-input-color: var(--color-text);
     --edit-title-input-border: 1px solid var(--color-border);
     --edit-title-input-border-radius: 5px;
@@ -138,7 +143,7 @@
     --modal-close-font-weight: bold;
     --modal-close-hover-color: var(--color-close-hover);
 
-    --modal-export-item-bg-color: var(--color-bg-medium);
+    --modal-export-item-bg-color: var(--color-bg-medium-alpha);
     --modal-export-item-color: var(--color-text);
     --modal-export-item-padding: 10px;
     --modal-export-item-border-bottom: 1px solid var(--color-border);
@@ -152,7 +157,7 @@
     --updater-background-color: var(--color-bg-dark);
     --updater-text-color: var(--color-text);
     --updater-text-download-color: var(--color-button-download-text);
-    --updater-button-background-color: var(--color-bg-medium);
+    --updater-button-background-color: var(--color-bg-medium-alpha);
     --updater-button-hover-background-color: var(--color-hover-light);
     --updater-button-download-background-color: var(--color-button-download);
     --updater-button-download-hover-background-color: var(--color-button-download-hover);
@@ -187,9 +192,13 @@
 
 :root[data-theme='frappe'] {
     --color-bg-dark: #303446;
+    --color-bg-dark-alpha: #30344670;
     --color-bg-darker: #232634;
+    --color-bg-darker-alpha: #23263470;
     --color-bg-medium: #292c3c;
+    --color-bg-medium-alpha: #292c3c70;
     --color-bg-light: #414559;
+    --color-bg-light-alpha: #41455970;
     --color-border: #51576d;
     --color-text: #c6d0f5;
     --color-placeholder: #a5adcb;
@@ -206,9 +215,13 @@
 
 :root[data-theme='macchiato'] {
     --color-bg-dark: #24273a;
+    --color-bg-dark-alpha: #24273a70;
     --color-bg-darker: #181926;
+    --color-bg-darker-alpha: #18192670;
     --color-bg-medium: #1e2030;
+    --color-bg-medium-alpha: #1e203070;
     --color-bg-light: #363a4f;
+    --color-bg-light-alpha: #363a4f70;
     --color-border: #494d64;
     --color-text: #cad3f5;
     --color-placeholder: #a5adcb;
@@ -229,13 +242,13 @@ body {
     height: var(--body-height);
     margin: var(--body-margin);
     font-family: var(--body-font-family);
-    background-color: var(--body-background-color);
+    /*background-color: var(--body-background-color);*/
     color: var(--body-color);
     overflow: hidden;
 }
 
 .titlebar {
-    background-color: var(--titlebar-bg-color);
+    /*background-color: var(--titlebar-bg-color);*/
     border-bottom: var(--sidebar-border-right);
     padding: var(--titlebar-padding);
     color: var(--titlebar-color);
@@ -281,7 +294,7 @@ body {
 .sidebar {
     width: var(--sidebar-width);
     max-width: var(--sidebar-max-width);
-    background-color: var(--sidebar-bg-color);
+    background-color: var(--sidebar-bg-color-alpha);
     border-right: var(--sidebar-border-right);
     padding: var(--sidebar-padding);
     box-sizing: var(--sidebar-box-sizing);
@@ -427,7 +440,7 @@ body {
 .editor .status{
     margin: 0;
     padding: 5px;
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-bg-dark-alpha);
     color: var(--color-text);
     font-size: 14px;
     width: fit-content;
@@ -634,7 +647,7 @@ body {
 .context-menu {
     display: none;
     position: absolute;
-    background-color: var(--color-bg-medium);
+    background-color: var(--color-bg-medium-alpha);
     border: 1px solid var(--color-border);
     border-radius: 5px;
     z-index: 1000;

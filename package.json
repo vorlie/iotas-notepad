@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "electron-log": "^5.3.0",
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "mica-electron": "^1.5.16"
   }
 }

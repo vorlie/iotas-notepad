@@ -1,11 +1,12 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, Notification } = require('electron');
+const { app, Tray, Menu, ipcMain, Notification } = require('electron');
+const { PARAMS, VALUE,  MicaBrowserWindow, IS_WINDOWS_11, WIN10 } = require('mica-electron');
 const path = require('path');
 
 let mainWindow;
 let tray = null;
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({
+  mainWindow = new MicaBrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -14,9 +15,13 @@ app.on('ready', () => {
       preload: __dirname + '/preload.js',
     },
     menuBarVisible: false,
+    frame: false,
     titleBarStyle: 'hidden',
     ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {})
   });
+
+  mainWindow.setRoundedCorner();	
+  mainWindow.setMicaAcrylicEffect();
 
   mainWindow.setTitleBarOverlay({
     color: 'rgba(0, 0, 0, 0)', // Transparent background
@@ -25,7 +30,7 @@ app.on('ready', () => {
   });
   mainWindow.setMinimumSize(950, 600);
 
-  Menu.setApplicationMenu(null);
+  //Menu.setApplicationMenu(null);
 
   mainWindow.loadFile('index.html');
 

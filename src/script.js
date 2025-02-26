@@ -9,9 +9,13 @@ const chromeVersion = window.API.versions.chrome();
 const defaultThemes = {
     mocha: {
         '--color-bg-dark': '#1e1e2e',
+        '--color-bg-dark-alpha': '#1e1e2e70',
         '--color-bg-darker': '#11111b',
+        '--color-bg-darker-alpha': '#11111b70',
         '--color-bg-medium': '#313244',
+        '--color-bg-medium-alpha': '#31324470',
         '--color-bg-light': '#45475a',
+        '--color-bg-light-alpha': '#45475a70',
         '--color-border': '#6c7086',
         '--color-text': '#cdd6f4',
         '--color-placeholder': '#a6adc8',
@@ -27,9 +31,13 @@ const defaultThemes = {
     },
     macchiato: {
         '--color-bg-dark': '#24273a',
+        '--color-bg-dark-alpha': '#24273a70',
         '--color-bg-darker': '#181926',
+        '--color-bg-darker-alpha': '#18192670',
         '--color-bg-medium': '#1e2030',
+        '--color-bg-medium-alpha': '#1e203070',
         '--color-bg-light': '#363a4f',
+        '--color-bg-light-alpha': '#363a4f70',
         '--color-border': '#494d64',
         '--color-text': '#cad3f5',
         '--color-placeholder': '#a5adcb',
@@ -45,9 +53,13 @@ const defaultThemes = {
     },
     frappe: {
         '--color-bg-dark': '#303446',
+        '--color-bg-dark-alpha': '#30344670',
         '--color-bg-darker': '#232634',
+        '--color-bg-darker-alpha': '#23263470',
         '--color-bg-medium': '#292c3c',
+        '--color-bg-medium-alpha': '#292c3c70',
         '--color-bg-light': '#414559',
+        '--color-bg-light-alpha': '#41455970',
         '--color-border': '#51576d',
         '--color-text': '#c6d0f5',
         '--color-placeholder': '#a5adcb',
@@ -87,30 +99,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-async function fetchReleases(isMica) {
-    const response = await fetch("https://api.github.com/repos/vorlie/iotas-notepad/releases");
-    if (!response.ok) {
-        console.error("Failed to fetch releases:", response.statusText);
-        return null;
-    }
-
+async function fetchReleases() {
+    const response = await fetch(
+        "https://api.github.com/repos/vorlie/iotas-notepad/releases",
+    );
     const releases = await response.json();
-
-    return releases.find(release => {
-        const tag = release.tag_name;
-        return isMica ? tag.includes("-mica") : !tag.includes("-mica");
-    });
+    return releases;
 }
 
 function isNewerVersion(currentVersion, latestVersion) {
-    const cleanVersion = (v) => v.replace(/-mica$/, ""); // Remove "-mica" if present
-
-    const current = cleanVersion(currentVersion).split(".").map(Number);
-    const latest = cleanVersion(latestVersion).split(".").map(Number);
+    const current = currentVersion.split(".").map(Number);
+    const latest = latestVersion.split(".").map(Number);
 
     for (let i = 0; i < latest.length; i++) {
-        if (latest[i] > (current[i] || 0)) return true;
-        if (latest[i] < (current[i] || 0)) return false;
+        if (latest[i] > (current[i] || 0)) {
+            return true;
+        } else if (latest[i] < (current[i] || 0)) {
+            return false;
+        }
     }
     return false;
 }
@@ -145,36 +151,25 @@ window.API.on('check-for-updates', () => {
 });
 
 async function checkForUpdates() {
-    const isMica = window.API.versions.iotanotepad().includes("-mica"); // Detect if running Mica version
-    const releases = await fetchReleases(isMica);
-    
-    if (!releases || releases.length === 0) {
-        console.error("No valid releases found.");
-        return;
-    }
-
+    const releases = await fetchReleases();
     const latestRelease = releases[0]; // Get the latest release
 
-    if (latestRelease && isNewerVersion(window.API.versions.iotanotepad(), latestRelease.tag_name)) {
+    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
         // Show notification for new version
         const notification = document.getElementById("notification");
         const message = document.getElementById("message");
         const downloadLink = document.getElementById("download-link");
-        
         message.innerText = `New version ${latestRelease.tag_name} is available!`;
-        window.API.sendNotification("Update Available", "A new version of the app is available.");
-
-        const downloadUrl = latestRelease.assets[0].browser_download_url;
-        const fileName = latestRelease.assets[0].name;
-
-        downloadLink.href = downloadUrl; 
+        window.API.sendNotification('Update Available', 'A new version of the app is available.');
+        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
         downloadLink.innerText = "Download";
         downloadLink.onclick = (e) => {
             e.preventDefault();
+            const downloadUrl = latestRelease.assets[0].browser_download_url;
+            const fileName = latestRelease.assets[0].name;
             notification.classList.add("hidden");
             downloadFile(downloadUrl, fileName);
         };
-
         notification.classList.remove("hidden");
     } else {
         // Show popup indicating the app is up-to-date
