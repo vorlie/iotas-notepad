@@ -9,6 +9,28 @@ const chromeVersion = window.API.versions.chrome();
 const defaultThemes = {
     mocha: {
         '--color-bg-dark': '#1e1e2e',
+        '--color-bg-dark-alpha': '#1e1e2e',
+        '--color-bg-darker': '#11111b',
+        '--color-bg-darker-alpha': '#11111b',
+        '--color-bg-medium': '#313244',
+        '--color-bg-medium-alpha': '#313244',
+        '--color-bg-light': '#45475a',
+        '--color-bg-light-alpha': '#45475a',
+        '--color-border': '#45475a',
+        '--color-text': '#cdd6f4',
+        '--color-placeholder': '#a6adc8',
+        '--color-hover': '#313244',
+        '--color-hover-light': '#45475a',
+        '--color-close-hover': '#f38ba8',
+        '--color-scrollbar-bg': '#2e3440',
+        '--color-scrollbar-thumb': '#4c566a',
+        '--color-scrollbar-thumb-hover': '#5e81ac',
+        '--color-button-download': '#b4befe',
+        '--color-button-download-hover': '#e3e7ff',
+        '--color-button-download-text': '#11111b'
+    },
+    mochaMica: {
+        '--color-bg-dark': '#1e1e2e',
         '--color-bg-dark-alpha': '#1e1e2e70',
         '--color-bg-darker': '#11111b',
         '--color-bg-darker-alpha': '#11111b70',
@@ -16,11 +38,11 @@ const defaultThemes = {
         '--color-bg-medium-alpha': '#31324470',
         '--color-bg-light': '#45475a',
         '--color-bg-light-alpha': '#45475a70',
-        '--color-border': '#6c7086',
+        '--color-border': '#45475a',
         '--color-text': '#cdd6f4',
         '--color-placeholder': '#a6adc8',
-        '--color-hover': '#585b70',
-        '--color-hover-light': '#6c7086',
+        '--color-hover': '#313244',
+        '--color-hover-light': '#45475a',
         '--color-close-hover': '#f38ba8',
         '--color-scrollbar-bg': '#2e3440',
         '--color-scrollbar-thumb': '#4c566a',
@@ -30,6 +52,28 @@ const defaultThemes = {
         '--color-button-download-text': '#11111b'
     },
     macchiato: {
+        '--color-bg-dark': '#24273a',
+        '--color-bg-dark-alpha': '#24273a',
+        '--color-bg-darker': '#181926',
+        '--color-bg-darker-alpha': '#181926',
+        '--color-bg-medium': '#1e2030',
+        '--color-bg-medium-alpha': '#1e2030',
+        '--color-bg-light': '#363a4f',
+        '--color-bg-light-alpha': '#363a4f',
+        '--color-border': '#494d64',
+        '--color-text': '#cad3f5',
+        '--color-placeholder': '#a5adcb',
+        '--color-hover': '#363a4f',
+        '--color-hover-light': '#494d64',
+        '--color-close-hover': '#ed8796',
+        '--color-scrollbar-bg': '#363a4f',
+        '--color-scrollbar-thumb': '#494d64',
+        '--color-scrollbar-thumb-hover': '#a5adcb',
+        '--color-button-download': '#8aadf4',
+        '--color-button-download-hover': '#b5bfe2',
+        '--color-button-download-text': '#24273a'
+    },
+    macchiatoMica: {
         '--color-bg-dark': '#24273a',
         '--color-bg-dark-alpha': '#24273a70',
         '--color-bg-darker': '#181926',
@@ -52,6 +96,28 @@ const defaultThemes = {
         '--color-button-download-text': '#24273a'
     },
     frappe: {
+        '--color-bg-dark': '#303446',
+        '--color-bg-dark-alpha': '#303446',
+        '--color-bg-darker': '#232634',
+        '--color-bg-darker-alpha': '#232634',
+        '--color-bg-medium': '#292c3c',
+        '--color-bg-medium-alpha': '#292c3c',
+        '--color-bg-light': '#414559',
+        '--color-bg-light-alpha': '#414559',
+        '--color-border': '#51576d',
+        '--color-text': '#c6d0f5',
+        '--color-placeholder': '#a5adcb',
+        '--color-hover': '#414559',
+        '--color-hover-light': '#51576d',
+        '--color-close-hover': '#e78284',
+        '--color-scrollbar-bg': '#414559',
+        '--color-scrollbar-thumb': '#51576d',
+        '--color-scrollbar-thumb-hover': '#a5adcb',
+        '--color-button-download': '#8caaee',
+        '--color-button-download-hover': '#b5bfe2',
+        '--color-button-download-text': '#303446'
+    },
+    frappeMica: {
         '--color-bg-dark': '#303446',
         '--color-bg-dark-alpha': '#30344670',
         '--color-bg-darker': '#232634',
@@ -186,7 +252,7 @@ function downloadFile(url, fileName) {
     // Create progress bar elements
     const progressDiv = document.createElement("div");
     progressDiv.style.width = "100%";
-    progressDiv.style.backgroundColor = "var(--color-bg-light)";
+    progressDiv.style.backgroundColor = "var(--color-bg-dark-alpha)";
     progressDiv.style.padding = "5px";
     progressDiv.style.borderTop = "1px solid var(--color-border)";
 

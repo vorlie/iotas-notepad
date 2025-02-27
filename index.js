@@ -1,5 +1,5 @@
 const { app, Tray, Menu, ipcMain, Notification } = require('electron');
-const { PARAMS, VALUE,  MicaBrowserWindow, IS_WINDOWS_11, WIN10 } = require('mica-electron');
+const { PARAMS, VALUE, MicaBrowserWindow, IS_WINDOWS_11, WIN10 } = require('mica-electron');
 const path = require('path');
 
 let mainWindow;
@@ -7,7 +7,7 @@ let tray = null;
 
 app.on('ready', () => {
   mainWindow = new MicaBrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     webPreferences: {
       contextIsolation: true,
@@ -16,11 +16,12 @@ app.on('ready', () => {
     },
     menuBarVisible: false,
     frame: false,
+    show: false,
     titleBarStyle: 'hidden',
     ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {})
   });
 
-  mainWindow.setRoundedCorner();	
+  mainWindow.setRoundedCorner();
   mainWindow.setMicaAcrylicEffect();
 
   mainWindow.setTitleBarOverlay({
@@ -28,11 +29,15 @@ app.on('ready', () => {
     symbolColor: 'rgba(205, 214, 244, 1)', // Symbol color
     height: 48
   });
-  mainWindow.setMinimumSize(950, 600);
+  mainWindow.setMinimumSize(1000, 600);
 
   //Menu.setApplicationMenu(null);
 
   mainWindow.loadFile('index.html');
+
+  mainWindow.webContents.once('dom-ready', () => {
+    mainWindow.show(); // Show the window only when DOM is ready
+  });
 
   mainWindow.on('closed', () => {
     app.quit();
