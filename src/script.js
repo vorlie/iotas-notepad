@@ -147,7 +147,7 @@ document.getElementById('open-dev-tools').addEventListener('click', () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
-    displayReleases();
+    checkForUpdates();
     loadSettings();
     applyThemeFlavor(); // Apply the saved theme flavor on startup
     updateThemeDropdown();
@@ -187,30 +187,6 @@ function isNewerVersion(currentVersion, latestVersion) {
     return false;
 }
 
-async function displayReleases() {
-    const releases = await fetchReleases();
-    const latestRelease = releases[0]; // Get the latest release
-
-    if (latestRelease && isNewerVersion(version, latestRelease.tag_name)) {
-        // Show notification
-        const notification = document.getElementById("notification");
-        const message = document.getElementById("message");
-        const downloadLink = document.getElementById("download-link");
-        message.innerText = `New version ${latestRelease.tag_name} is available!`;
-        window.API.sendNotification('Update Available', 'A new version of the app is available.');
-        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
-        downloadLink.innerText = "Download";
-        downloadLink.onclick = (e) => {
-            e.preventDefault();
-            const downloadUrl = latestRelease.assets[0].browser_download_url;
-            const fileName = latestRelease.assets[0].name;
-            notification.classList.add("hidden");
-            downloadFile(downloadUrl, fileName);
-        };
-        notification.classList.remove("hidden");
-    }
-}
-
 window.API.on('check-for-updates', () => {
     console.log("Received check-for-updates event");
     checkForUpdates();
@@ -225,17 +201,28 @@ async function checkForUpdates() {
         const notification = document.getElementById("notification");
         const message = document.getElementById("message");
         const downloadLink = document.getElementById("download-link");
+        const fileSelect = document.getElementById("file-select");
+
         message.innerText = `New version ${latestRelease.tag_name} is available!`;
         window.API.sendNotification('Update Available', 'A new version of the app is available.');
-        downloadLink.href = latestRelease.assets[0].browser_download_url; // Assuming the first asset is the setup file
-        downloadLink.innerText = "Download";
+
+        // Populate the dropdown menu with available assets
+        fileSelect.innerHTML = '';
+        latestRelease.assets.forEach(asset => {
+            const option = document.createElement('option');
+            option.value = asset.browser_download_url;
+            option.textContent = asset.name;
+            fileSelect.appendChild(option);
+        });
+
         downloadLink.onclick = (e) => {
             e.preventDefault();
-            const downloadUrl = latestRelease.assets[0].browser_download_url;
-            const fileName = latestRelease.assets[0].name;
+            const downloadUrl = fileSelect.value;
+            const fileName = fileSelect.options[fileSelect.selectedIndex].text;
             notification.classList.add("hidden");
             downloadFile(downloadUrl, fileName);
         };
+
         notification.classList.remove("hidden");
     } else {
         // Show popup indicating the app is up-to-date

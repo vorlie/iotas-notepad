@@ -7,8 +7,8 @@ let tray = null;
 
 app.on('ready', () => {
   mainWindow = new MicaBrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1200,
+    height: 700,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
