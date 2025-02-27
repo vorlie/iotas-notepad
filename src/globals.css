@@ -5,12 +5,12 @@
     --body-height: 100vh;
     --body-margin: 0;
     --body-font-family: Arial, sans-serif;
-    --body-background-color: var(--color-bg-dark-alpha);
+    --body-background-color: var(--color-bg-dark);
     --body-color: var(--color-text);
 
     --hover-transition: 0.2s ease;
 
-    --titlebar-bg-color: var(--color-bg-medium-alpha);
+    --titlebar-bg-color: var(--color-bg-medium);
     --titlebar-padding: 10px;
     --titlebar-color: var(--color-text);
     --titlebar-border-bottom: 1px solid var(--color-border);
@@ -24,7 +24,7 @@
     --search-bar-margin-bottom: 10px;
     --search-bar-border-radius: 8px;
     --search-bar-border: 1px solid var(--color-border);
-    --search-bar-bg-color: var(--color-bg-medium-alpha);
+    --search-bar-bg-color: var(--color-bg-medium);
     --search-bar-color: var(--color-text);
     --search-bar-placeholder-color: var(--color-placeholder);
 
@@ -32,7 +32,7 @@
     --dropdown-margin-right: 2px;
     --dropdown-border-radius: 5px;
     --dropdown-border: 1px solid var(--color-border);
-    --dropdown-bg-color: var(--color-bg-medium-alpha);
+    --dropdown-bg-color: var(--color-bg-medium);
     --dropdown-color: var(--color-text);
     --dropdown-font-size: 14px;
 
@@ -42,7 +42,7 @@
 
     --sidebar-width: 35%;
     --sidebar-max-width: 400px;
-    --sidebar-bg-color: var(--color-bg-darker-alpha);
+    --sidebar-bg-color: var(--color-bg-darker);
     --sidebar-border-right: 1px solid var(--color-border);
     --sidebar-spacing: 10px;
     --sidebar-radius: 10px;
@@ -60,8 +60,8 @@
     --note-list-item-cursor: pointer;
     --note-list-item-position: relative;
     --note-list-item-hover-bg-color: var(--color-hover);
-    --note-list-item-selected-bg-color: var(--color-bg-medium-alpha);
-    --note-list-item-background-color: var(--color-bg-dark-alpha);
+    --note-list-item-selected-bg-color: var(--color-bg-medium);
+    --note-list-item-background-color: var(--color-bg-dark);
 
     --note-title-font-size: 1em;
     --note-title-display: block;
@@ -84,7 +84,7 @@
     --button-padding: 5px;
     --button-padding-2: 4.2px;
 
-    --editor-bg-color: var(--color-bg-darker-alpha);
+    --editor-bg-color: var(--color-bg-darker);
     --editor-font-family: var(--body-font-family);
     --editor-text-color: var(--color-text);
     --editor-border: none;
@@ -98,7 +98,7 @@
     --scrollbar-thumb-bg-color: var(--color-scrollbar-thumb);
     --scrollbar-thumb-hover-bg-color: var(--color-scrollbar-thumb-hover);
 
-    --edit-title-input-bg-color: var(--color-bg-light-alpha);
+    --edit-title-input-bg-color: var(--color-bg-light);
     --edit-title-input-color: var(--color-text);
     --edit-title-input-border: 1px solid var(--color-border);
     --edit-title-input-border-radius: 5px;
@@ -121,7 +121,7 @@
     --modal-close-font-weight: bold;
     --modal-close-hover-color: var(--color-close-hover);
 
-    --modal-export-item-bg-color: var(--color-bg-medium-alpha);
+    --modal-export-item-bg-color: var(--color-bg-medium);
     --modal-export-item-color: var(--color-text);
     --modal-export-item-padding: 10px;
     --modal-export-item-border-bottom: 1px solid var(--color-border);
@@ -135,7 +135,7 @@
     --updater-background-color: var(--color-bg-dark);
     --updater-text-color: var(--color-text);
     --updater-text-download-color: var(--color-button-download-text);
-    --updater-button-background-color: var(--color-bg-medium-alpha);
+    --updater-button-background-color: var(--color-bg-medium);
     --updater-button-hover-background-color: var(--color-hover-light);
     --updater-button-download-background-color: var(--color-button-download);
     --updater-button-download-hover-background-color: var(--color-button-download-hover);
@@ -353,7 +353,7 @@ body {
 .editor .status{
     margin: 0;
     padding: 5px;
-    background-color: var(--color-bg-dark-alpha);
+    background-color: var(--color-bg-dark);
     color: var(--color-text);
     font-size: 14px;
     width: fit-content;
