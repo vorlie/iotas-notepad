@@ -5,6 +5,8 @@ const path = require('path');
 let mainWindow;
 let tray = null;
 
+if (require('electron-squirrel-startup')) app.quit();
+
 app.on('ready', () => {
   mainWindow = new MicaBrowserWindow({
     width: 1200,
@@ -74,7 +76,6 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-if (require('electron-squirrel-startup')) app.quit();
 
 function showNotification(title, body) {
   if (Notification.isSupported()) {
