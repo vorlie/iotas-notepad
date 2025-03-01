@@ -19,7 +19,7 @@
     --titlebar-align-items: center;
     --titlebar-justify-content: space-between;
 
-    --search-bar-padding: 5px;
+    --search-bar-padding: 10px;
     --search-bar-margin-right: 5px;
     --search-bar-margin-bottom: 10px;
     --search-bar-border-radius: 8px;
@@ -81,7 +81,8 @@
     --button-color: var(--color-text);
     --button-border-color: var(--color-border);
     --button-border-radius: 5px;
-    --button-padding: 5px;
+    --titlebar-button-padding: 6px;
+    --button-padding: 6px;
     --button-padding-2: 4.2px;
 
     --editor-bg-color: var(--color-bg-darker);
@@ -281,7 +282,7 @@ body {
     list-style-type: none;
     padding: var(--note-list-padding);
     margin: 0;
-    height: calc(100% - 70px);
+    height: calc(100% - 80px);
     overflow-y: auto;
 }
 
@@ -342,7 +343,7 @@ body {
 }
 
 .titlebar-actions .button{
-    padding: var(--button-padding-2);
+    padding: var(--titlebar-button-padding);
     margin-right: var(--note-actions-button-margin-right);
     background-color: var(--button-bg-color);
     color: var(--button-color);
