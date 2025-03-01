@@ -59,7 +59,7 @@ app.on('ready', () => {
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Check for Updates', click: () => {
-        console.log("Check for Updates menu item clicked"); // Add this line
+        console.log("Check for Updates menu item clicked");
         if (mainWindow) {
           mainWindow.webContents.send('check-for-updates'); // Send to renderer
         }
