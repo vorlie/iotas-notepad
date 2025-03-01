@@ -24,10 +24,10 @@ app.on('ready', () => {
 
   mainWindow.setTitleBarOverlay({
     color: 'rgba(0, 0, 0, 0)', // Transparent background
-    symbolColor: 'rgba(205, 214, 244, 1)', // Symbol color
+    symbolColor: 'rgba(255, 255, 255, 1)', // Symbol color
     height: 48
   });
-  mainWindow.setMinimumSize(1000, 600);
+  mainWindow.setMinimumSize(1200, 700);
 
   //Menu.setApplicationMenu(null);
 

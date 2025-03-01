@@ -9,7 +9,10 @@
 </head>
 <body>
     <div class="titlebar" style="app-region: drag;">
-        <h2 class="titlebar-h1" style="app-region: drag;">Iota's Notepad</h2>
+        <div class="titlebar-branding" style="app-region: drag;">
+            <img src="assets/icon.png" alt="Iota's Notepad" class="titlebar-icon" style="app-region: drag;">
+            <h2 class="titlebar-h2" style="app-region: drag;">Iota's Notepad</h2>
+        </div>
         <div class="titlebar-actions" style="app-region: no-drag;">
             <button title="Exports a selected note from the modal list" class="button" onclick="openExportModal()">Export</button>
             <input type="file" accept=".txt" id="importNotesInput" style="display:none" onchange="importNotes(event)">
@@ -59,24 +62,29 @@
         </div>
     </div>
     <div id="settingsModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content settings-modal-content">
             <span class="close" onclick="closeSettingsModal()">&times;</span>
             <div style="display: flex; justify-content: space-between;">
                 <div class="settings-section">
                     <h2 class="modal-h2">Settings</h2>
-                    <label for="timeFormat">Time Format:</label>
-                    <select id="timeFormat" class="dropdown">
-                        <option value="12">12-hour</option>
-                        <option value="24">24-hour</option>
-                    </select>
-                    <label for="themeFlavor">Theme Flavor:</label>
-                    <select id="themeFlavor" class="dropdown" onchange="loadTheme(this.value)">
-                        <option value="mocha">Mocha</option>
-                        <!-- <option value="latte">Latte</option> -->
-                        <!-- Commented because i have no idea how to make the window controls symbol colors change based on contrast -->
-                        <option value="frappe">Frappe</option>
-                        <option value="macchiato">Macchiato</option>
-                    </select>
+                    <div class="settings-inputs">
+                        <p class="settings-label">Time Format:</p>
+                        <select id="timeFormat" class="dropdown settings-dropdown">
+                            <option value="12">12-hour</option>
+                            <option value="24">24-hour</option>
+                        </select>
+                    </div>
+                    <div class="settings-inputs">
+                        <p class="settings-label">Theme Flavor:</p>
+                        <select id="themeFlavor" class="dropdown settings-dropdown" onchange="loadTheme(this.value)">
+                            <option value="mocha">Mocha</option>
+                            <!-- <option value="latte">Latte</option> -->
+                            <!-- Commented because i have no idea how to make the window controls symbol colors change based on contrast -->
+                            <option value="frappe">Frappe</option>
+                            <option value="macchiato">Macchiato</option>
+                            <option value="clearDark">Clear Dark</option>
+                        </select>
+                    </div>
                     <div class="settings-buttons">
                         <button class="settings-button" onclick="document.getElementById('importThemeInput').click()">Import theme</button>
                         <input type="file" accept=".json" id="importThemeInput" style="display:none" onchange="importTheme(event)">
@@ -87,10 +95,12 @@
                 <div class="divider"></div>
                 <div class="about-section">
                     <h2 class="modal-h2">About</h2>
-                    <p id="appVersion">Version: </p>
-                    <p id="electronVersion">Electron Version: </p>
-                    <p id="nodeVersion">Node.js Version: </p>
-                    <p id="chromeVersion">Chrome Version: </p>
+                    <div class="about-versions">
+                        <p id="appVersion" class="version">Version: </p>
+                        <p id="electronVersion" class="version">Electron Version: </p>
+                        <p id="nodeVersion" class="version">Node.js Version: </p>
+                        <p id="chromeVersion" class="version">Chrome Version: </p>
+                    </div>
                     <button class="about-button" onclick="checkForUpdates()">Check for Updates</button>
                     <button class="about-button" id="open-dev-tools" onclick="window.API.openDevTools()">Open DevTools</button>
                 </div>

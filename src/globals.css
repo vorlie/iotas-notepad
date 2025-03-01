@@ -115,6 +115,7 @@
     --modal-content-border: 1px solid var(--color-border);
     --modal-content-width: 80%;
     --modal-content-max-width: 600px;
+    --modal-content-settings-max-width: 700px;
 
     --modal-close-color: var(--color-text);
     --modal-close-font-size: 28px;
@@ -169,13 +170,25 @@ body {
     align-items: var(--titlebar-align-items);
 }
 
+.titlebar-branding {
+    display: var(--titlebar-display);
+    align-items: var(--titlebar-align-items);
+}
+
+.titlebar-icon {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 25%;
+}
+
 .titlebar-actions {
     margin-right: var(--titlebar-actions-margin-right);
     display: var(--titlebar-display);
     align-items: var(--titlebar-align-items);
 }
 
-.titlebar-h1{
+.titlebar-h2{
     margin: 0;
 }
 
@@ -241,6 +254,23 @@ body {
 .dropdown option {
     background-color: var(--dropdown-bg-color);
     color: var(--dropdown-color);
+}
+
+.settings-inputs {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 5px;
+    margin: 0;
+}
+
+.settings-inputs .settings-label {
+    margin: 0;
+    margin-right: 10px; 
+}
+
+.settings-dropdown {
+    flex: 1;
+    margin-top: 8px;
 }
 
 .header-h2 {
@@ -419,6 +449,10 @@ body {
     overflow: hidden;
 }
 
+.settings-modal-content {
+    max-width: var(--modal-content-settings-max-width) !important;
+}
+
 .modal .button {
     background-color: var(--button-bg-color);
     color: var(--button-color);
@@ -456,6 +490,24 @@ body {
 
 .button:hover, .settings-button:hover, .about-button:hover {
     background-color: var(--button-bg-color-hover);
+}
+
+.settings-buttons{
+    border-top: var(--sidebar-border-right);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.about-versions{
+    border-bottom: var(--sidebar-border-right);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.about-versions .version{
+    font-size: 14px;
+    margin: 0;
+    color: var(--color-placeholder);
 }
 
 .modal-h2{
