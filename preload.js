@@ -10,6 +10,6 @@ contextBridge.exposeInMainWorld('API', {
     node: () => process.versions.node,
     chrome: () => process.versions.chrome,
     electron: () => process.versions.electron,
-    iotanotepad: () => "1.2.0"
+    iotanotepad: () => "1.2.1"
   },
 });
