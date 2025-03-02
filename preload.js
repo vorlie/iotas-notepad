@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('API', {
   on: (channel, func) => ipcRenderer.on(channel, func),
   send: (channel, ...args) => ipcRenderer.send(channel, ...args),
   removeListener: (channel, func) => ipcRenderer.removeListener(channel, func),
+  openThemeEditor: () => ipcRenderer.send('open-theme-editor'),
   versions: {
     node: () => process.versions.node,
     chrome: () => process.versions.chrome,
