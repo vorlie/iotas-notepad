@@ -1,8 +1,9 @@
-const { app, Tray, Menu, ipcMain, Notification } = require('electron');
+const { app, Tray, Menu, BrowserWindow, ipcMain, Notification } = require('electron');
 const { PARAMS, VALUE, MicaBrowserWindow, IS_WINDOWS_11, WIN10 } = require('mica-electron');
 const path = require('path');
 
 let mainWindow;
+let themeEditorWindow = null;
 let tray = null;
 
 
@@ -74,10 +75,41 @@ app.on('ready', () => {
   tray.setContextMenu(contextMenu);
 });
 
+function createThemeEditorWindow() {
+  if (themeEditorWindow) {
+    themeEditorWindow.focus();
+    return;
+  }
+
+  themeEditorWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js'),
+    },
+    title: "Theme Editor",
+    autoHideMenuBar: true,
+  });
+
+  themeEditorWindow.maximize();
+
+  themeEditorWindow.loadURL('https://vorlie.pages.dev/theme-editor');
+
+  themeEditorWindow.on('closed', () => {
+    themeEditorWindow = null;
+  });
+}
+
+// IPC listener to open the theme editor
+ipcMain.on('open-theme-editor', () => {
+  createThemeEditorWindow();
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
-
 
 function showNotification(title, body) {
   if (Notification.isSupported()) {
@@ -103,4 +135,3 @@ function showNotification(title, body) {
     console.log('Notifications are not supported on this system.');
   }
 }
-

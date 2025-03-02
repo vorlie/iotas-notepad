@@ -189,6 +189,10 @@ document.getElementById('open-dev-tools').addEventListener('click', () => {
     window.API.openDevTools();
 });
 
+document.getElementById('open-theme-editor').addEventListener('click', () => {
+    window.API.openThemeEditor();
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
     checkForUpdates();
