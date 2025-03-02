@@ -25,9 +25,9 @@ app.on('ready', () => {
     symbolColor: 'rgba(255, 255, 255, 1)', // Symbol color
     height: 48
   });
-  
+
   if (require('electron-squirrel-startup')) app.quit();
-  
+
   mainWindow.setMinimumSize(1200, 700);
 
   //Menu.setApplicationMenu(null);
