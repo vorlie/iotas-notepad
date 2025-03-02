@@ -56,9 +56,16 @@ Iota's Notepad automatically checks for updates when the application starts. If 
 
 ## Adding Custom Themes
 
-You can add custom themes to Iota's Notepad by importing a JSON file with the theme definitions. Follow these steps:
+### Use the Theme Editor *(Optional)*
+- Click the **"Open Theme Editor"** button to access a embedded editor for customizing themes.
+- Alternatively, you can open the [theme editor website](https://vorlie.pages.dev/theme-editor) to modify and export themes easily.
+- **Note:** The theme editor does not directly interact with the application. After creating a theme, you must manually import the exported JSON file.
+
+### Importing Custom Themes
+You can add custom themes to Iota's Notepad by importing a JSON file with the theme definitions.
 
 1. **Create a JSON file** with your custom theme definitions. The JSON file should follow this structure:
+    - Or just use the [theme editor website](https://vorlie.pages.dev/theme-editor) :D
     ```json
     {
         "customThemeName": {
