@@ -185,6 +185,10 @@ const defaultThemes = {
     }
 };
 
+function sendTitleBarUpdate(isLight) {
+    window.API.send('set-titlebar-overlay', { isLight: isLight });
+}
+
 document.getElementById('open-dev-tools').addEventListener('click', () => {
     window.API.openDevTools();
 });
@@ -444,8 +448,16 @@ function loadTheme(themeName) {
     const theme = customThemes[themeName] || defaultThemes[themeName];
     if (theme) {
         applyTheme(theme);
+
+        const isLightTheme = themeName.toLowerCase().includes('latte') || themeName.toLowerCase().includes('light');
+        //const useLightSymbols = themeName.toLowerCase().includes('dark');
+        sendTitleBarUpdate(isLightTheme);
     } else {
+        //console.warn(`Theme ${themeName} not found.`);
         document.documentElement.setAttribute('data-theme', themeName);
+        //const defaultThemeName = 'mocha';
+        //applyTheme(defaultThemes[defaultThemeName]);
+        //sendTitleBarUpdate(false);
     }
 }
 

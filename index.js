@@ -1,77 +1,107 @@
-const { app, Tray, Menu, BrowserWindow, ipcMain, Notification } = require('electron');
-const { PARAMS, VALUE, MicaBrowserWindow, IS_WINDOWS_11, WIN10 } = require('mica-electron');
-const path = require('path');
+const {
+  app,
+  Tray,
+  Menu,
+  BrowserWindow,
+  ipcMain,
+  Notification,
+} = require("electron");
+const {
+  PARAMS,
+  VALUE,
+  MicaBrowserWindow,
+  IS_WINDOWS_11,
+  WIN10,
+} = require("mica-electron");
+const path = require("path");
 
 let mainWindow;
 let themeEditorWindow = null;
 let tray = null;
 
-
-app.on('ready', () => {
+app.on("ready", () => {
   mainWindow = new MicaBrowserWindow({
     width: 1200,
     height: 700,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
-      preload: __dirname + '/preload.js',
+      preload: path.join(__dirname, "/preload.js"),
     },
     menuBarVisible: false,
     frame: false,
     show: false,
-    titleBarStyle: 'hidden',
-    ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {})
+    titleBarStyle: "hidden",
+    ...(process.platform !== "darwin" ? { titleBarOverlay: true } : {}),
   });
 
-  if (require('electron-squirrel-startup')) app.quit();
+  if (require("electron-squirrel-startup")) app.quit();
 
   mainWindow.setRoundedCorner();
   mainWindow.setMicaAcrylicEffect();
 
   mainWindow.setTitleBarOverlay({
-    color: 'rgba(0, 0, 0, 0)', // Transparent background
-    symbolColor: 'rgba(255, 255, 255, 1)', // Symbol color
-    height: 48
+    color: "rgba(0, 0, 0, 0)", // Transparent background
+    symbolColor: "rgba(255, 255, 255, 1)", // Default to light symbols (for dark themes)
+    height: 48,
   });
 
   mainWindow.setMinimumSize(1200, 700);
 
   //Menu.setApplicationMenu(null);
 
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile("index.html");
 
-  mainWindow.webContents.once('dom-ready', () => {
+  mainWindow.webContents.once("dom-ready", () => {
     mainWindow.show(); // Show the window only when DOM is ready
   });
 
-  mainWindow.on('closed', () => {
-    app.quit();
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+    if (themeEditorWindow) {
+      themeEditorWindow.close(); // Close editor if main closes
+    }
+    // app.quit()
   });
 
-  ipcMain.on('show-notification', (event, title, body) => {
+  ipcMain.on("show-notification", (event, title, body) => {
     showNotification(title, body);
   });
 
-  ipcMain.on('open-dev-tools', () => {
+  ipcMain.on("open-dev-tools", () => {
     if (mainWindow) {
       mainWindow.webContents.openDevTools();
     }
   });
 
-  tray = new Tray(path.join(__dirname, 'assets/icon.png'));
+  ipcMain.on("set-titlebar-overlay", (event, options) => {
+    if (mainWindow) {
+      const symbolColor = options.isLight
+        ? "rgba(0, 0, 0, 1)"
+        : "rgba(255, 255, 255, 1)";
+      mainWindow.setTitleBarOverlay({
+        color: "rgba(0, 0, 0, 0)",
+        symbolColor: symbolColor,
+        height: 48,
+      });
+    }
+  });
+
+  tray = new Tray(path.join(__dirname, "assets/icon.png"));
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Check for Updates', click: () => {
+      label: "Check for Updates",
+      click: () => {
         console.log("Check for Updates menu item clicked");
         if (mainWindow) {
-          mainWindow.webContents.send('check-for-updates'); // Send to renderer
+          mainWindow.webContents.send("check-for-updates"); // Send to renderer
         }
-      }
+      },
     },
-    { type: 'separator' },
-    { label: 'Quit', click: () => app.quit() }
+    { type: "separator" },
+    { label: "Quit", click: () => app.quit() },
   ]);
-  tray.setToolTip('Iota\'s Notepad');
+  tray.setToolTip("Iota's Notepad");
   tray.setContextMenu(contextMenu);
 });
 
@@ -87,7 +117,7 @@ function createThemeEditorWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
     },
     title: "Theme Editor",
     autoHideMenuBar: true,
@@ -95,26 +125,26 @@ function createThemeEditorWindow() {
 
   themeEditorWindow.maximize();
 
-  themeEditorWindow.loadURL('https://vorlie.pages.dev/theme-editor');
+  themeEditorWindow.loadURL("https://vorlie.pages.dev/theme-editor");
 
-  themeEditorWindow.on('closed', () => {
+  themeEditorWindow.on("closed", () => {
     themeEditorWindow = null;
   });
 }
 
 // IPC listener to open the theme editor
-ipcMain.on('open-theme-editor', () => {
+ipcMain.on("open-theme-editor", () => {
   createThemeEditorWindow();
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
 });
 
 function showNotification(title, body) {
   if (Notification.isSupported()) {
     let iconPath;
-    iconPath = path.join(__dirname, 'assets', 'icon.png');
+    iconPath = path.join(__dirname, "assets", "icon.png");
 
     const notification = new Notification({
       title: title,
@@ -122,8 +152,8 @@ function showNotification(title, body) {
       icon: iconPath,
     });
 
-    notification.on('click', () => {
-      console.log('Notification clicked');
+    notification.on("click", () => {
+      console.log("Notification clicked");
       if (mainWindow) {
         if (mainWindow.isMinimized()) mainWindow.restore();
         mainWindow.focus();
@@ -132,6 +162,6 @@ function showNotification(title, body) {
 
     notification.show();
   } else {
-    console.log('Notifications are not supported on this system.');
+    console.log("Notifications are not supported on this system.");
   }
 }

@@ -21,7 +21,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 - **In-app update notifications**: Stay informed when updates are available for the app.
 - **Settings modal**: Access app settings for customizing functionality and preferences.
 - **12-hour and 24-hour time formats**: Choose between 12-hour and 24-hour time format for note timestamps.
-- **Selectable Catppuccin Mocha, Frappe, and Macchiato flavors**: Choose from three Catppuccin theme flavors for a personalized interface.
+- **Customizable UI colors**: Customize the UI colors to match your preferences.
 - **Import and apply custom themes**: Customize the UI colors by importing and applying your own themes.
 - **Developer Options**: Access DevTools.
 
