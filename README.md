@@ -58,6 +58,8 @@ Iota's Notepad automatically checks for updates when the application starts. If 
 
 You can add custom themes to Iota's Notepad by importing a JSON file with the theme definitions. Follow these steps:
 
+> **Current Behavior for v1.2.2:** To ensure title bar symbols automatically adapt correctly for light themes, please include the word "light" (case-insensitive) in your custom theme's name within the JSON file. Dark themes or themes without "light" in the name will default to using light symbols.
+
 1. **Create a JSON file** with your custom theme definitions. The JSON file should follow this structure:
     ```json
     {
