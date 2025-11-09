@@ -34,7 +34,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
     "@electron-forge/plugin-fuses": "^7.6.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "^34.2.0"
+    "electron": "^39.1.1"
   },
   "config": {
     "forge": {
@@ -51,6 +51,12 @@
             "authors": "vorlie",
             "description": "Electron-based Notepad"
           }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "linux"
+          ]
         }
       ]
     }
