@@ -1,6 +1,15 @@
-# -Not- Iota's Notepad - Mica
+⚠️ Looking for GNOME Iotas?
 
--Not- Iota's Notepad is a simple note-taking application built with Electron. It allows you to create, edit, and delete notes with a user-friendly interface.
+If you're looking for the GNOME note-taking app "Iotas", **this is a different project**.
+
+👉 Official GNOME Iotas repository: https://gitlab.gnome.org/World/iotas
+
+This repository is a personal project ("Iota's Notepad") and is not related.
+
+---
+# Iota's Notepad - Mica
+
+Iota's Notepad is a simple note-taking application built with Electron. It allows you to create, edit, and delete notes with a user-friendly interface.
 
 ## Features
 
