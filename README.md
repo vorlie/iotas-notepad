@@ -1,6 +1,6 @@
-# Iota's Notepad - Mica
+# -Not-Iota's Notepad - Mica
 
-Iota's Notepad is a simple note-taking application built with Electron. It allows you to create, edit, and delete notes with a user-friendly interface.
+-Not- Iota's Notepad is a simple note-taking application built with Electron. It allows you to create, edit, and delete notes with a user-friendly interface.
 
 ## Features
 
