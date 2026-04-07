@@ -1,10 +1,12 @@
-⚠️ Not affiliated with GNOME Iotas
+⚠️ Looking for GNOME Iotas?
 
 If you're looking for the GNOME note-taking app "Iotas", **this is a different project**.
 
 👉 Official GNOME Iotas repository: https://gitlab.gnome.org/World/iotas
 
 This repository is a personal project ("Iota's Notepad") and is not related.
+
+![Not Affiliated](https://img.shields.io/badge/Not%20affiliated-GNOME%20Iotas-red)
 
 ---
 # Iota's Notepad - Mica
@@ -48,7 +50,7 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
   An unofficial Arch Linux AUR package is available:
   ```bash
-  yay -S iotas-notepad-git
+    yay -S iotas-notepad-git
   ```
   > Note: This package is maintained by a third party and not officially supported.
 
