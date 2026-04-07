@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Editor</title>
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="theme-editor.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="editor-container">
+        <header>
+            <h1>Theme Editor</h1>
+            <div class="header-actions">
+                <input type="text" id="theme-name" placeholder="Enter theme name..." class="theme-name-input">
+                <button class="button save-btn" onclick="saveTheme()"><i class="bi bi-floppy"></i> Save Theme</button>
+                <button class="button preview-btn" onclick="previewTheme()"><i class="bi bi-eye"></i> Preview</button>
+            </div>
+        </header>
+        
+        <main id="variable-groups">
+            <!-- Groups will be injected here by JS -->
+        </main>
+    </div>
+    <script src="theme-editor.js"></script>
+</body>
+</html>

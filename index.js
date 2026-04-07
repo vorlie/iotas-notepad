@@ -125,7 +125,7 @@ function createThemeEditorWindow() {
 
   themeEditorWindow.maximize();
 
-  themeEditorWindow.loadURL("https://vorlie.pages.dev/theme-editor");
+  themeEditorWindow.loadFile(path.join(__dirname, "src/theme-editor.html"));
 
   themeEditorWindow.on("closed", () => {
     themeEditorWindow = null;
@@ -135,6 +135,18 @@ function createThemeEditorWindow() {
 // IPC listener to open the theme editor
 ipcMain.on("open-theme-editor", () => {
   createThemeEditorWindow();
+});
+
+ipcMain.on("apply-theme-preview", (event, theme) => {
+  if (mainWindow) {
+    mainWindow.webContents.send("apply-theme-preview", theme);
+  }
+});
+
+ipcMain.on("update-themes", () => {
+  if (mainWindow) {
+    mainWindow.webContents.send("update-themes");
+  }
 });
 
 app.on("window-all-closed", () => {

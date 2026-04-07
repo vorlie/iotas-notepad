@@ -217,6 +217,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+window.API.on('apply-theme-preview', (event, theme) => {
+    applyTheme(theme);
+});
+
+window.API.on('update-themes', () => {
+    updateThemeDropdown();
+});
+
 async function fetchReleases() {
     const response = await fetch(
         "https://api.github.com/repos/vorlie/iotas-notepad/releases",
