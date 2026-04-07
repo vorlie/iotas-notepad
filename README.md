@@ -173,3 +173,7 @@ Contributions are welcome! Please open an issue or submit a pull request.
 - [Electron](https://www.electronjs.org/)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
 - Thanks to [@zxp19821005](https://github.com/zxp19821005) for creating and maintaining the AUR package `iotas-notepad-git`.
+
+## Disambiguation
+
+This project ("Iota's Notepad") is unrelated to the GNOME "Iotas" note-taking application.
