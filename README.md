@@ -84,7 +84,6 @@ You can add custom themes to Iota's Notepad by importing a JSON file with the th
 > **Note:** To ensure title bar symbols automatically adapt correctly for light themes, please include the word "light" (case-insensitive) in your custom theme's name. Dark themes or themes without "light" in the name will default to using light symbols.
 
 1. **Create a JSON file** with your custom theme definitions. The JSON file should follow this structure:
-    - Or just use the [theme editor website](https://vorlie.pages.dev/theme-editor) :D
     ```json
     {
         "customThemeName": {
