@@ -1,4 +1,4 @@
-⚠️ Looking for GNOME Iotas?
+⚠️ Not affiliated with GNOME Iotas
 
 If you're looking for the GNOME note-taking app "Iotas", **this is a different project**.
 
@@ -46,8 +46,10 @@ Iota's Notepad is a simple note-taking application built with Electron. It allow
 
 - Linux (AUR)
 
-  An unofficial AUR package is available:
-  `yay -S iotas-notepad-git`
+  An unofficial Arch Linux AUR package is available:
+  ```bash
+  yay -S iotas-notepad-git
+  ```
   > Note: This package is maintained by a third party and not officially supported.
 
 ## Checking for Updates
@@ -173,7 +175,3 @@ Contributions are welcome! Please open an issue or submit a pull request.
 - [Electron](https://www.electronjs.org/)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
 - Thanks to [@zxp19821005](https://github.com/zxp19821005) for creating and maintaining the AUR package `iotas-notepad-git`.
-
-## Disambiguation
-
-This project ("Iota's Notepad") is unrelated to the GNOME "Iotas" note-taking application.
